@@ -8,6 +8,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include "clsBalance.h"
+#include "clsProveedor.h"
+#include "clsCliente.h"
 
 int main(void) {
 	int opcion, opcion2;
@@ -21,13 +25,13 @@ int main(void) {
 		scanf("%d", &opcion);
 		switch (opcion) {
 		case 1:
-//			introducirBalance();
+			introducirBalance();
 			break;
 		case 2:
 
-//			if (existsFile("Balance.txt") == 0) {
-//				introducirBalance();
-//			} else {
+			if (existsFile("Balance.txt") == false) {
+				introducirBalance();
+			} else {
 
 
 				do {
@@ -42,9 +46,9 @@ int main(void) {
 
 				scanf("%d", &opcion2);
 				switch (opcion2) {
-				case 1:
+				case 1: introducirCliente();
 					break;
-				case 2:
+				case 2: introducirProveedor();
 					break;
 				case 3:
 					break;
@@ -56,21 +60,10 @@ int main(void) {
 					break;
 				}
 			} while (opcion2 != 7);
-//			}
+			}
 
 			break;
 		}
 	} while (opcion != 3);
 	return 0;
-}
-
-int existsFile(char* filename) {
-	FILE* f = NULL;
-	f = fopen(filename, "r");
-	if (f == NULL)
-		return 0;
-	else {
-		fclose(f);
-		return 1;
-	}
 }
