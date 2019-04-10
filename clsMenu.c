@@ -30,6 +30,7 @@ int main(void) {
 		case 2:
 
 			if (existsFile("Balance.txt") == false) {
+				printf(" No existe ningun balance, por lo tanto, ¡introduce los datos!\n");
 				introducirBalance();
 			} else {
 

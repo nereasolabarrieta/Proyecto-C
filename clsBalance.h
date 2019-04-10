@@ -5,6 +5,7 @@
  *      Author: nereasolabarrieta
  */
 #include <stdbool.h>
+
 #ifndef CLSBALANCE_H_
 #define CLSBALANCE_H_
 
