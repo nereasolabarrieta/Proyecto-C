@@ -16,4 +16,5 @@ typedef struct
 }Cliente;
 
 void introducirCliente();
+void escribirClienteEnFic(Cliente);
 #endif /* CLSCLIENTE_H_ */

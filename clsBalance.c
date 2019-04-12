@@ -53,6 +53,8 @@ void introducirBalance()
 
 	escribirFichero(nuevoBalance);
 
+	// habria que mirar si coincide y cuadra
+
 }
 void escribirFichero(Balance balance)
 {

@@ -15,4 +15,5 @@ typedef struct
 }Proveedor;
 
 void introducirProveedor();
+void escribirProveedorEnFic(Proveedor);
 #endif /* CLSPROVEEDOR_H_ */
