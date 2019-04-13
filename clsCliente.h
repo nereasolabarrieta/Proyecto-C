@@ -16,7 +16,9 @@ typedef struct
 	int acumulado;
 }Cliente;
 
-void introducirCliente(Cliente * nuevoCliente);
+void introducirCliente(Cliente *);
 void escribirClienteEnFic(Cliente);
+void imprimirCliente(Cliente *);
+void lecturaFicheroCliente();
 
 #endif /* CLSCLIENTE_H_ */

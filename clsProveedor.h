@@ -17,4 +17,6 @@ typedef struct
 void introducirProveedor(Proveedor *nuevoProveedor);
 void escribirProveedorEnFic(Proveedor);
 void ImprimirProv(Proveedor prov);
+void lecturaFicheroProv();
+
 #endif /* CLSPROVEEDOR_H_ */

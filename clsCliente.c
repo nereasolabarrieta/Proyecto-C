@@ -11,70 +11,75 @@
 
 #define TAMANYO 30
 
-void introducirCliente(Cliente * nuevoCliente)
-{
-	char *dni=malloc(10*sizeof(char));
-		printf("Introduce DNI:\n");
-		fflush(stdin);
-		scanf("%s", dni);
+void introducirCliente(Cliente * nuevoCliente) {
+	char *dni = malloc(10 * sizeof(char));
+	printf("Introduce DNI:\n");
+	fflush(stdin);
+	scanf("%s", dni);
 
-		char *nom;
-		nom = (char*) malloc (TAMANYO*sizeof(char));
-		printf("Introduce NOMBRE\n");
-		fflush(stdin);
-		scanf("%s", nom);
+	char *nom;
+	nom = (char*) malloc(TAMANYO * sizeof(char));
+	printf("Introduce NOMBRE\n");
+	fflush(stdin);
+	scanf("%s", nom);
 
-		char *nombre;
-		int len = strlen(nom);
-		nombre = (char*) malloc (len*sizeof(char));
-		strcpy(nombre,nom);
+	char *nombre;
+	int len = strlen(nom);
+	nombre = (char*) malloc(len * sizeof(char));
+	strcpy(nombre, nom);
 
+	char *ape;
+	ape = (char*) malloc(TAMANYO * sizeof(char));
+	printf("Introduce APELLIDO\n");
+	fflush(stdin);
+	scanf("%s", ape);
 
+	char *apellido;
+	len = strlen(ape);
+	apellido = (char*) malloc(len * sizeof(char));
+	strcpy(apellido, ape);
 
-		char *ape;
-		ape = (char*) malloc (TAMANYO*sizeof(char));
-		printf("Introduce APELLIDO\n");
-		fflush(stdin);
-		scanf("%s", ape);
+	nuevoCliente->nom = nombre;
+	nuevoCliente->ape = apellido;
+	nuevoCliente->dni = dni;
+	nuevoCliente->acumulado = 0;
 
-		char *apellido;
-		len = strlen(ape);
-		apellido = (char*) malloc (len*sizeof(char));
-		strcpy(apellido,ape);
-
-
-
-		nuevoCliente->nom=nombre;
-		nuevoCliente->ape = apellido;
-		nuevoCliente->dni = dni;
-		nuevoCliente->acumulado=0;
-
-		fflush(stdin);
-		escribirClienteEnFic(*nuevoCliente);
-		free(nom);
-		free(ape);
+	fflush(stdin);
+	escribirClienteEnFic(*nuevoCliente);
+	free(nom);
+	free(ape);
 }
-void escribirClienteEnFic(Cliente c)
-{
+void escribirClienteEnFic(Cliente c) {
 
 	FILE *fp;
-	fp = fopen ( "Clientes.txt", "a" );
+	fp = fopen("Clientes.txt", "a");
 
-	fprintf(fp, "Nombre: %s\n",c.nom);
-	fprintf(fp, "Apellido: %s\n",c.ape);
-	fprintf(fp, "Dni: %s\n",c.dni);
-	fprintf(fp, "Dinero Acumulado: %i\n",c.acumulado);
+	fprintf(fp, "%s ", c.nom);
+	fprintf(fp, "%s", c.ape);
+	fprintf(fp, "%s", c.dni);
+	fprintf(fp, "%i\n", c.acumulado);
 
 	fprintf(fp, "------------------------\n");
-
 
 	fclose(fp);
 
 }
-void ImprimirCliente(Cliente cl)
-{
+void lecturaFicheroCliente() {
+	FILE *f;
+	f = fopen("Clientes.txt", "r");
+	char *c;
+	char caracter;
+	c = (char*) malloc(sizeof(char));
+	while ((caracter = fgetc(f)) != EOF) {
+		fgets(c, sizeof(Cliente), f);
+		printf("%s\n", c);
+	}
+	fclose(f);
+}
 
-	printf("[Nombre: %s, Apellido: %s, DNI: %s, Dinero Acumulado: %i ]\n",cl.nom,cl.ape, cl.dni,cl.acumulado);
+void imprimirCliente(Cliente *cl) {
+	printf("Nombre %s %s, dni: %s, dinero: %i€\n", cl->nom, cl->ape, cl->dni,
+			cl->acumulado);
 }
 
 

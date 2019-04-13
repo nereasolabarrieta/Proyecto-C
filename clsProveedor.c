@@ -1,5 +1,4 @@
 
-
 #include "clsProveedor.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,49 +6,56 @@
 
 #define TAMANYO 20
 
-void introducirProveedor(Proveedor *nuevoProveedor)
-{
-	char *NIF=malloc(10*sizeof(char));
-			printf("Introduce NIF:\n");
-			fflush(stdin);
-			scanf("%s", NIF);
+void introducirProveedor(Proveedor *nuevoProveedor) {
+	char *NIF = malloc(10 * sizeof(char));
+	printf("Introduce NIF:\n");
+	fflush(stdin);
+	scanf("%s", NIF);
 
+	char *nom;
+	fflush(stdin);
+	nom = (char*) malloc(TAMANYO * sizeof(char));
+	printf("Introduce NOMBRE\n");
+	scanf("%s", nom);
 
-			char *nom;
-			fflush(stdin);
-			nom = (char*) malloc (TAMANYO*sizeof(char));
-			printf("Introduce NOMBRE\n");
-			scanf("%s", nom);
+	char *nombre;
+	int len = strlen(nom);
+	nombre = (char*) malloc(len * sizeof(char));
+	strcpy(nombre, nom);
+	free(nom);
 
-			char *nombre;
-			int len = strlen(nom);
-			nombre = (char*) malloc (len*sizeof(char));
-			strcpy(nombre,nom);
-			free(nom);
+	nuevoProveedor->NIF = NIF;
+	nuevoProveedor->nom = nombre;
+	fflush(stdin);
 
-			nuevoProveedor->NIF=NIF;
-			nuevoProveedor->nom=nombre;
-			fflush(stdin);
-
-			escribirProveedorEnFic(*nuevoProveedor);
+	escribirProveedorEnFic(*nuevoProveedor);
 }
 
-void escribirProveedorEnFic(Proveedor p)
-{
+void escribirProveedorEnFic(Proveedor p) {
 
 	FILE *fp;
-	fp = fopen ( "Proveedores.txt", "a" );
+	fp = fopen("Proveedores.txt", "a");
 
-	fprintf(fp, "Nombre: %s\n",p.nom);
-	fprintf(fp, "NIF: %s\n",p.NIF);
+	fprintf(fp, "%s ", p.nom);
+	fprintf(fp, "%s\n", p.NIF);
 
 	fprintf(fp, "------------------------\n");
 	fclose(fp);
 
 }
-void ImprimirProv(Proveedor prov)
-{
-	printf("[Nombre: %s, NIF: %s ]\n",prov.nom,prov.NIF);
+void lecturaFicheroProv() {
+	FILE *f;
+	f = fopen("Proveedores.txt", "r");
+	char *c;
+	char caracter;
+	c = (char*) malloc(sizeof(char));
+	while ((caracter = fgetc(f)) != EOF) {
+		fgets(c, sizeof(Proveedor), f);
+		printf("%s\n", c);
+	}
+	fclose(f);
 }
-
+void ImprimirProv(Proveedor prov) {
+	printf("[Nombre: %s, NIF: %s ]\n", prov.nom, prov.NIF);
+}
 

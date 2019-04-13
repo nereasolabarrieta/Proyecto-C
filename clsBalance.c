@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void introducirBalance()
+void introducir()
 {
 
 	float importeStock;

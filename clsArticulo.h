@@ -32,5 +32,10 @@ typedef struct
 	int stock;
 
 }Complemento;
-
+void anyadirArticulo();
+void anyadirComplemento();
+void anyadirTextil();
+void escrituraAFic(Articulo);
+void escrituraTextil(Textil);
+void escrituraComplemento(Complemento);
 #endif /* CLSARTICULO_H_ */

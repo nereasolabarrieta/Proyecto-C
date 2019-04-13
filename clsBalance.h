@@ -20,7 +20,7 @@ typedef struct
 	float importePN;
 }Balance;
 
-void introducirBalance();
+void introducir();
 void escribirFichero(Balance);
 bool existsFile(char*);
 
