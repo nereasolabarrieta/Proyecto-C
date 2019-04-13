@@ -1,40 +1,41 @@
-/*
- * clsProveedor.c
+* clsProveedor.c
  *
- *  Created on: 9 abr. 2019
- *      Author: nereasolabarrieta
+ *  Created on: 13/4/2019
+ *      Author: ALUMNO
  */
-
 
 #include "clsProveedor.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void introducirProveedor()
+#define TAMANYO 20
+
+void introducirProveedor(Proveedor *nuevoProveedor)
 {
-	char dni[10];
-		printf("Introduce DNI\n");
-		scanf("%s", dni);
+		char *NIF=malloc(10*sizeof(char));
+		printf("Introduce NIF:\n");
 		fflush(stdin);
+		scanf("%s", NIF);
+
 
 		char *nom;
-		nom = (char*) malloc (sizeof(char));
+		fflush(stdin);
+		nom = (char*) malloc (TAMANYO*sizeof(char));
 		printf("Introduce NOMBRE\n");
 		scanf("%s", nom);
+
+		char *nombre;
+		int len = strlen(nom);
+		nombre = (char*) malloc (len*sizeof(char));
+		strcpy(nombre,nom);
+		free(nom);
+
+		nuevoProveedor->NIF=NIF;
+		nuevoProveedor->nom=nombre;
 		fflush(stdin);
 
-		Proveedor nuevoProveedor;
-
-		for (int i=0; i<strlen(dni); i++)
-		{
-			nuevoProveedor.dni[i] = dni[i];
-		}
-
-		nuevoProveedor.nombre = nom;
-
-		fflush(stdin);
-		escribirProveedorEnFic(nuevoProveedor);
+		escribirProveedorEnFic(*nuevoProveedor);
 }
 
 void escribirProveedorEnFic(Proveedor p)
@@ -43,11 +44,16 @@ void escribirProveedorEnFic(Proveedor p)
 	FILE *fp;
 	fp = fopen ( "Proveedores.txt", "a" );
 
-	fprintf(fp, "Nombre: %s\n",p.nombre);
-	fprintf(fp, "Dni: %s\n",p.dni);
+	fprintf(fp, "Nombre: %s\n",p.nom);
+	fprintf(fp, "NIF: %s\n",p.NIF);
 
 	fprintf(fp, "------------------------\n");
 	fclose(fp);
 
 }
+void ImprimirProv(Proveedor prov)
+{
+	printf("[Nombre: %s, NIF: %s ]\n",prov.nom,prov.NIF);
+}
+
 

@@ -15,6 +15,7 @@ typedef struct
 	char *ape;
 }Cliente;
 
-void introducirCliente();
+void introducirCliente(Cliente * nuevoCliente);
 void escribirClienteEnFic(Cliente);
+
 #endif /* CLSCLIENTE_H_ */

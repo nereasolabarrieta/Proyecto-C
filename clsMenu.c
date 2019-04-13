@@ -5,7 +5,7 @@
  *      Author: nereasolabarrieta
  */
 
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
@@ -67,4 +67,4 @@ int main(void) {
 		}
 	} while (opcion != 3);
 	return 0;
-}
+}*/

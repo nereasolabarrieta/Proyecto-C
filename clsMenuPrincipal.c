@@ -25,9 +25,11 @@ int main(void) {
 	if (!existsFile("Balance.txt"))
 	{
 		introducir();
+
 		Menu();
 	} else
 	{
+
 		Menu();
 	}
 	return 0;

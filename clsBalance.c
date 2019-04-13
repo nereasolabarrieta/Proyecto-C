@@ -87,6 +87,8 @@ void escribirFichero(Balance balance)
 	fclose(fp);
 
 }
+
+
 bool existsFile(char* filename) {
 	FILE* f = NULL;
 	f = fopen(filename, "r");

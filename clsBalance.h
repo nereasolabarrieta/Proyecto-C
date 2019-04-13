@@ -24,4 +24,5 @@ void introducirBalance();
 void escribirFichero(Balance);
 bool existsFile(char*);
 
+
 #endif /* CLSBALANCE_H_ */

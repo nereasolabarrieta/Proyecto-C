@@ -1,47 +1,58 @@
 /*
  * clsCliente.c
  *
- *  Created on: 9 abr. 2019
- *      Author: nereasolabarrieta
+ *  Created on: 13/4/2019
+ *      Author: ALUMNO
  */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "clsCliente.h"
 
-void introducirCliente()
-{
+#define TAMANYO 30
 
-	char dni[10];
-	printf("Introduce DNI\n");
-	scanf("%s", dni);
+void introducirCliente(Cliente * nuevoCliente)
+{
+	char *dni=malloc(10*sizeof(char));
+	printf("Introduce DNI:\n");
 	fflush(stdin);
+	scanf("%s", dni);
 
 	char *nom;
-	nom = (char*) malloc (sizeof(char));
+	nom = (char*) malloc (TAMANYO*sizeof(char));
 	printf("Introduce NOMBRE\n");
-	scanf("%s", nom);
 	fflush(stdin);
+	scanf("%s", nom);
+
+	char *nombre;
+	int len = strlen(nom);
+	nombre = (char*) malloc (len*sizeof(char));
+	strcpy(nombre,nom);
+
+
 
 	char *ape;
-	ape = (char*) malloc (sizeof(char));
+	ape = (char*) malloc (TAMANYO*sizeof(char));
 	printf("Introduce APELLIDO\n");
+	fflush(stdin);
 	scanf("%s", ape);
 
+	char *apellido;
+	len = strlen(ape);
+	apellido = (char*) malloc (len*sizeof(char));
+	strcpy(apellido,ape);
 
-	Cliente nuevoCliente;
-	nuevoCliente.ape = ape;
-	for (int i=0; i<strlen(dni); i++)
-	{
-		nuevoCliente.dni[i] = dni[i];
-	}
 
-	nuevoCliente.nombre = nom;
+
+	nuevoCliente->nom=nombre;
+	nuevoCliente->ape = apellido;
+	nuevoCliente->dni = dni;
+	nuevoCliente->acumulado=0;
 
 	fflush(stdin);
-	escribirClienteEnFic(nuevoCliente);
-
+	escribirClienteEnFic(*nuevoCliente);
+	free(nom);
+	free(ape);
 }
 void escribirClienteEnFic(Cliente c)
 {
@@ -49,10 +60,10 @@ void escribirClienteEnFic(Cliente c)
 	FILE *fp;
 	fp = fopen ( "Clientes.txt", "a" );
 
-
-	fprintf(fp, "Nombre: %s\n",c.nombre);
+	fprintf(fp, "Nombre: %s\n",c.nom);
 	fprintf(fp, "Apellido: %s\n",c.ape);
 	fprintf(fp, "Dni: %s\n",c.dni);
+	fprintf(fp, "Dinero Acumulado: %i\n",c.acumulado);
 
 	fprintf(fp, "------------------------\n");
 
@@ -60,4 +71,11 @@ void escribirClienteEnFic(Cliente c)
 	fclose(fp);
 
 }
+void ImprimirCliente(Cliente cl)
+{
+
+	printf("[Nombre: %s, Apellido: %s, DNI: %s, Dinero Acumulado: %i ]\n",cl.nom,cl.ape, cl.dni,cl.acumulado);
+}
+
+
 
