@@ -10,9 +10,10 @@
 
 typedef struct
 {
-	char dni[10];
-	char *nombre;
+	char* dni;
+	char *nom;
 	char *ape;
+	int acumulado;
 }Cliente;
 
 void introducirCliente(Cliente * nuevoCliente);

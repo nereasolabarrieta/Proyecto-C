@@ -10,10 +10,11 @@
 
 typedef struct
 {
-	char dni[10];
-	char *nombre;
+	char *NIF;
+	char *nom;
 }Proveedor;
 
 void introducirProveedor(Proveedor *nuevoProveedor);
 void escribirProveedorEnFic(Proveedor);
+void ImprimirProv(Proveedor prov);
 #endif /* CLSPROVEEDOR_H_ */

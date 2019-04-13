@@ -1,8 +1,4 @@
-* clsProveedor.c
- *
- *  Created on: 13/4/2019
- *      Author: ALUMNO
- */
+
 
 #include "clsProveedor.h"
 #include <stdio.h>
@@ -13,29 +9,29 @@
 
 void introducirProveedor(Proveedor *nuevoProveedor)
 {
-		char *NIF=malloc(10*sizeof(char));
-		printf("Introduce NIF:\n");
-		fflush(stdin);
-		scanf("%s", NIF);
+	char *NIF=malloc(10*sizeof(char));
+			printf("Introduce NIF:\n");
+			fflush(stdin);
+			scanf("%s", NIF);
 
 
-		char *nom;
-		fflush(stdin);
-		nom = (char*) malloc (TAMANYO*sizeof(char));
-		printf("Introduce NOMBRE\n");
-		scanf("%s", nom);
+			char *nom;
+			fflush(stdin);
+			nom = (char*) malloc (TAMANYO*sizeof(char));
+			printf("Introduce NOMBRE\n");
+			scanf("%s", nom);
 
-		char *nombre;
-		int len = strlen(nom);
-		nombre = (char*) malloc (len*sizeof(char));
-		strcpy(nombre,nom);
-		free(nom);
+			char *nombre;
+			int len = strlen(nom);
+			nombre = (char*) malloc (len*sizeof(char));
+			strcpy(nombre,nom);
+			free(nom);
 
-		nuevoProveedor->NIF=NIF;
-		nuevoProveedor->nom=nombre;
-		fflush(stdin);
+			nuevoProveedor->NIF=NIF;
+			nuevoProveedor->nom=nombre;
+			fflush(stdin);
 
-		escribirProveedorEnFic(*nuevoProveedor);
+			escribirProveedorEnFic(*nuevoProveedor);
 }
 
 void escribirProveedorEnFic(Proveedor p)

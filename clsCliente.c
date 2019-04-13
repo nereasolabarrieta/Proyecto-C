@@ -14,45 +14,45 @@
 void introducirCliente(Cliente * nuevoCliente)
 {
 	char *dni=malloc(10*sizeof(char));
-	printf("Introduce DNI:\n");
-	fflush(stdin);
-	scanf("%s", dni);
+		printf("Introduce DNI:\n");
+		fflush(stdin);
+		scanf("%s", dni);
 
-	char *nom;
-	nom = (char*) malloc (TAMANYO*sizeof(char));
-	printf("Introduce NOMBRE\n");
-	fflush(stdin);
-	scanf("%s", nom);
+		char *nom;
+		nom = (char*) malloc (TAMANYO*sizeof(char));
+		printf("Introduce NOMBRE\n");
+		fflush(stdin);
+		scanf("%s", nom);
 
-	char *nombre;
-	int len = strlen(nom);
-	nombre = (char*) malloc (len*sizeof(char));
-	strcpy(nombre,nom);
-
-
-
-	char *ape;
-	ape = (char*) malloc (TAMANYO*sizeof(char));
-	printf("Introduce APELLIDO\n");
-	fflush(stdin);
-	scanf("%s", ape);
-
-	char *apellido;
-	len = strlen(ape);
-	apellido = (char*) malloc (len*sizeof(char));
-	strcpy(apellido,ape);
+		char *nombre;
+		int len = strlen(nom);
+		nombre = (char*) malloc (len*sizeof(char));
+		strcpy(nombre,nom);
 
 
 
-	nuevoCliente->nom=nombre;
-	nuevoCliente->ape = apellido;
-	nuevoCliente->dni = dni;
-	nuevoCliente->acumulado=0;
+		char *ape;
+		ape = (char*) malloc (TAMANYO*sizeof(char));
+		printf("Introduce APELLIDO\n");
+		fflush(stdin);
+		scanf("%s", ape);
 
-	fflush(stdin);
-	escribirClienteEnFic(*nuevoCliente);
-	free(nom);
-	free(ape);
+		char *apellido;
+		len = strlen(ape);
+		apellido = (char*) malloc (len*sizeof(char));
+		strcpy(apellido,ape);
+
+
+
+		nuevoCliente->nom=nombre;
+		nuevoCliente->ape = apellido;
+		nuevoCliente->dni = dni;
+		nuevoCliente->acumulado=0;
+
+		fflush(stdin);
+		escribirClienteEnFic(*nuevoCliente);
+		free(nom);
+		free(ape);
 }
 void escribirClienteEnFic(Cliente c)
 {
