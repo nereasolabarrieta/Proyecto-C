@@ -12,6 +12,7 @@ void introducirBalance();
 void menu();
 void menuPrincipal();
 void imprimirClientes ();
+void imprimirBalance ();
 void introducirC();
 void imprimirProv ();
 void compra();
