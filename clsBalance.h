@@ -23,6 +23,7 @@ typedef struct
 void introducir();
 void escribirFichero(Balance);
 bool existsFile(char*);
+bool cuadra(float importeStock, float importeRealizable,float importeDisponible, float importeANC,float importePC,float importePNC,float importePN);
 
 
 #endif /* CLSBALANCE_H_ */

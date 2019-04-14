@@ -10,9 +10,10 @@
 #include <string.h>
 #include <stdbool.h>
 #include "clsArticulo.h"
+#include "clsBalance.h"
 #define TAMANYO 20
 
-void anyadirComplemento(Complemento * complementos, int tamanyo) {
+void anyadirComplemento(Complemento * complementos, int tamanyo, Balance * balance) {
 
 	char codigo[10];
 	printf("Introduce el codigo:\n");
@@ -48,6 +49,7 @@ void anyadirComplemento(Complemento * complementos, int tamanyo) {
 
 				escrituraComplemento(*(complementos + i));
 				free(nom);
+				Contabilizar_complemento(*(complementos + i),stock,balance);
 				break;
 			}
 		}
@@ -63,13 +65,14 @@ void anyadirComplemento(Complemento * complementos, int tamanyo) {
 				int compra;
 				scanf("%i", &compra);
 				(complementos + i)->stock = ((complementos + i)->stock)+ compra;
+				Contabilizar_complemento(*(complementos + i),compra,balance);
 
 			}
 
 		}
 	}
 }
-	void anyadirTextil(Textil * textiles, int tamanyo) {
+	void anyadirTextil(Textil * textiles, int tamanyo,Balance * balance) {
 		char codigo[10];
 		printf("Introduce el codigo:\n");
 
@@ -97,14 +100,6 @@ void anyadirComplemento(Complemento * complementos, int tamanyo) {
 					printf("Introduce el precio:\n");
 					scanf("%f", &precio);
 					fflush(stdin);
-
-					/*		Articulo a;
-					 a.codigo = codigo;
-					 a.nombre = nombre;
-					 a.precio = precio;
-
-					 escrituraAFic(a);
-					 */
 
 					int stockXS;
 					printf("Introduce stock de talla XS\n");
@@ -141,6 +136,9 @@ void anyadirComplemento(Complemento * complementos, int tamanyo) {
 					(textiles + i)->color = color;
 
 					escrituraTextil(*(textiles + i));
+					int compra=stockXS+stockS+stockM+stockL;
+					Contabilizar_textil(*(textiles + i),compra,balance);
+
 					break;
 				}
 			}
@@ -148,22 +146,43 @@ void anyadirComplemento(Complemento * complementos, int tamanyo) {
 		}
 		else
 		{
+			for (int i = 0; i < tamanyo; i++) {
+					if (strcmp((textiles + i)->articulo.codigo, codigo) == 0) {
+						printf("El articulo que ha comprado es el siguiente: \n");
+						Imprimir_textil(*(textiles + i));
+						int compraXS;
+						int compraS;
+						int compraM;
+						int compraL;
 
+						printf("¿Cuantos articulos ha comprado de la talla XS?\n");
+						fflush(stdin);
+						scanf("%i", &compraXS);
+
+						printf("¿Y de la talla S?\n");
+						fflush(stdin);
+						scanf("%i", &compraS);
+
+						printf("¿Y de la talla M?\n");
+						fflush(stdin);
+						scanf("%i", &compraM);
+
+						printf("¿Y de la talla L?\n");
+						fflush(stdin);
+						scanf("%i", &compraL);
+
+						(textiles + i)->stockXS = ((textiles + i)->stockXS)+ compraXS;
+						(textiles + i)->stockS = ((textiles + i)->stockS)+ compraS;
+						(textiles + i)->stockM = ((textiles + i)->stockM)+ compraM;
+						(textiles + i)->stockL = ((textiles + i)->stockL)+ compraL;
+
+						int compra=compraXS+compraS+compraM+compraL;
+						Contabilizar_textil(*(textiles + i),compra,balance);
+
+					}
+
+				}
 		}
-	}
-	void escrituraAFic(Articulo a) {
-
-		FILE *fp;
-		fp = fopen("Articulos.txt", "a");
-
-		fprintf(fp, "%s ", a.codigo);
-		fprintf(fp, "%s ", a.nombre);
-		fprintf(fp, "%.2f\n", a.precio);
-
-		fprintf(fp, "------------------------\n");
-
-		fclose(fp);
-
 	}
 
 	bool comprobar_textil(Textil * textiles, int tamanyo, char * codigo) {
@@ -192,6 +211,24 @@ void anyadirComplemento(Complemento * complementos, int tamanyo) {
 			}
 		}
 		return unico;
+	}
+
+	void Contabilizar_complemento(Complemento complemento,int cantidad, Balance * balance)
+	{
+		float precio=complemento.articulo.precio;
+		float cuantia = cantidad*precio;
+		balance->importePC= balance->importePC + cuantia;
+		balance->importeStock= balance->importeStock +cuantia;
+
+	}
+
+	void Contabilizar_textil(Textil textil,int cantidad, Balance * balance)
+	{
+		float precio=textil.articulo.precio;
+		float cuantia = cantidad*precio;
+		balance->importePC= balance->importePC + cuantia;
+		balance->importeStock= balance->importeStock +cuantia;
+
 	}
 
 	void Imprimir_complemento(Complemento complemento) {

@@ -7,7 +7,7 @@
 
 #ifndef CLSARTICULO_H_
 #define CLSARTICULO_H_
-
+#include "clsBalance.h"
 typedef struct
 {
 	char *codigo;
@@ -42,4 +42,6 @@ bool comprobar_textil(Textil * textiles, int tamanyo, char * codigo);
 bool comprobar_complemento(Complemento * complementos,int tamanyo, char * codigo);
 void Imprimir_complemento(Complemento complemento);
 void Imprimir_textil(Textil textil);
+void Contabilizar_textil(Textil textil,int cantidad, Balance * balance);
+void Contabilizar_complemento(Complemento complemento,int cantidad, Balance * balance);
 #endif /* CLSARTICULO_H_ */

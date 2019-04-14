@@ -11,50 +11,62 @@
 #include <stdlib.h>
 #include <time.h>
 
-void introducir()
+void introducir(Balance * nuevoBalance)
 {
-
 	float importeStock;
-	printf("Introducir STOCK\n");
-	scanf("%f", &importeStock);
-
 	float importeRealizable;
-	printf("Introducir REALIZABLE\n");
-	scanf("%f", &importeRealizable);
-
 	float importeDisponible;
-	printf("Introducir DISPONIBLE\n");
-	scanf("%f", &importeDisponible);
-
 	float importeANC;
-	printf("Introducir ACTIVO NO CORRIENTE\n");
-	scanf("%f", &importeANC);
-
 	float importePC;
-	printf("Introducir PASIVO CORRIENTE\n");
-	scanf("%f", &importePC);
-
 	float importePNC;
-	printf("Introducir PASIVO NO CORRIENTE\n");
-	scanf("%f", &importePNC);
-
 	float importePN;
-	printf("Introducir PATRIMONIO NETO\n");
-	scanf("%f", &importePN);
 
-	Balance nuevoBalance;
-	nuevoBalance.importeANC = importeANC;
-	nuevoBalance.importeDisponible = importeDisponible;
-	nuevoBalance.importePC = importePC;
-	nuevoBalance.importePN = importePN;
-	nuevoBalance.importePNC = importePNC;
-	nuevoBalance.importeRealizable = importeRealizable;
-	nuevoBalance.importeStock = importeStock;
+do	{
+		printf("Introducir STOCK\n");
+		scanf("%f", &importeStock);
 
-	escribirFichero(nuevoBalance);
+		printf("Introducir REALIZABLE\n");
+		scanf("%f", &importeRealizable);
+
+		printf("Introducir DISPONIBLE\n");
+		scanf("%f", &importeDisponible);
+
+		printf("Introducir ACTIVO NO CORRIENTE\n");
+		scanf("%f", &importeANC);
+
+		printf("Introducir PASIVO CORRIENTE\n");
+		scanf("%f", &importePC);
+
+		printf("Introducir PASIVO NO CORRIENTE\n");
+		scanf("%f", &importePNC);
+
+		printf("Introducir PATRIMONIO NETO\n");
+		scanf("%f", &importePN);
+
+	}while (!cuadra(importeStock, importeRealizable,importeDisponible, importeANC, importePC, importePNC, importePN));
+
+
+
+	nuevoBalance->importeANC = importeANC;
+	nuevoBalance->importeDisponible = importeDisponible;
+	nuevoBalance->importePC = importePC;
+	nuevoBalance->importePN = importePN;
+	nuevoBalance->importePNC = importePNC;
+	nuevoBalance->importeRealizable = importeRealizable;
+	nuevoBalance->importeStock = importeStock;
+
+	escribirFichero(*(nuevoBalance));
 
 	// habria que mirar si coincide y cuadra
 
+}
+bool cuadra(float importeStock, float importeRealizable,float importeDisponible, float importeANC,float importePC,float importePNC,float importePN)
+{
+
+	int activo= importeStock+importeRealizable+importeDisponible+importeANC;
+	int pasivo= importePC+importePNC+importePN;
+	if(activo==pasivo)return true;
+	else return false;
 }
 void escribirFichero(Balance balance)
 {

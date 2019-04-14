@@ -82,35 +82,35 @@ void menu() {
 		fflush(stdin);
 		scanf("%c", &opcion);
 		switch (opcion) {
-		case 1:
+		case '1':
 			introducirC();
 			break;
-		case 2:
+		case '2':
 			introducirP();
 			break;
-		case 3:
+		case '3':
 			break;
-		case 4: compra();
+		case '4': compra();
 			break;
-		case 5:
+		case '5':
 			break;
-		case 6:
+		case '6': imprimirBalance();
 			break;
-		case 7:
+		case '7':
 			imprimirClientes();
 			break;
-		case 8:
+		case '8':
 			imprimirProv();
 			break;
-		case 9:
+		case '9':
 			break;
-		case 0:
+		case '0':
 			printf("Agur");
 			break;
 		default:
 			printf("Esa opcion no esta disponible\n");
 		}
-	} while (opcion != 0);
+	} while (opcion != '0');
 }
 void introducirBalance() {
 	printf("A continuacion introduzca su balance en masas patrimoniales:\n");
@@ -142,7 +142,7 @@ void introducirP() {
 
 
 
-void anyadirArticulo() {
+void compra() {
 	char opcion;
 	do {
 
@@ -153,17 +153,17 @@ void anyadirArticulo() {
 		fflush(stdin);
 		scanf("%c", &opcion);
 		switch (opcion) {
-		case 1:
+		case '1':
 			anyadirComplemento(complementos,NUM_ARTIC);
 			break;
-		case 2:
+		case '2':
 			anyadirTextil(textiles,NUM_ARTIC);
 			break;
 
 		default:
 			printf("Esa opcion no existe.");
 		}
-	} while (opcion != 1 && opcion != 2 );
+	} while (!(opcion == '1' || opcion == '2') );
 
 }
 
@@ -184,4 +184,24 @@ void imprimirProv() {
 			ImprimirProv(*(proveedores + i));
 		}
 	}
+}
+
+void imprimirBalance ()
+{
+	float totalA= nuestro_balance->importeANC+nuestro_balance->importeDisponible+nuestro_balance->importeStock+nuestro_balance->importeRealizable;
+	float totalP= nuestro_balance->importePC+nuestro_balance->importePN+nuestro_balance->importePNC;
+	printf( "TOTAL ACTIVO: %i eu\n",totalA);
+		printf( "Activo no corriente: %f\n",nuestro_balance->importeANC);
+		printf( "Activo corriente: %f\n",nuestro_balance->importeDisponible+nuestro_balance->importeStock+nuestro_balance->importeRealizable);
+		printf( "1. Stock: %f\n",nuestro_balance->importeStock);
+		printf( "2. Realizable: %f\n",+nuestro_balance->importeRealizable);
+		printf( "3. Disponible: %f\n",nuestro_balance->importeDisponible);
+
+		printf( "--------------------------\n");
+
+
+		printf( "TOTAL PASIVO Y PATRIMONIO NETO: %f\n",totalP);
+		printf( "PAtrimonio neto: %f\n",nuestro_balance->importePN);
+		printf("Pasivo no corriente: %f\n",nuestro_balance->importePNC);
+		printf( "Pasivo corriente: %f\n",nuestro_balance->importePC);
 }
