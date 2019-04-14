@@ -8,182 +8,239 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "clsArticulo.h"
-#define TAMANYO 10
-void anyadirArticulo() {
-	int opcion;
-	do {
+#define TAMANYO 20
 
-		printf("Que tipo de articulo desea introducir?\n");
-		printf("1-Complemento\n");
-		printf("2-Textil\n");
+void anyadirComplemento(Complemento * complementos, int tamanyo) {
 
-		fflush(stdin);
-		scanf("%d", &opcion);
-		switch (opcion) {
-		case 1:
-			anyadirComplemento();
-			break;
-		case 2:
-			anyadirTextil();
-			break;
+	char codigo[10];
+	printf("Introduce el codigo:\n");
+	fflush(stdin);
+	scanf("%s", codigo);
+	if (comprobar_complemento(complementos, tamanyo, codigo)) {
+		char cod_vacio[] = "0000000000";
+		for (int i = 0; i < tamanyo; i++) {
+			if (strcmp((complementos + i)->articulo.codigo, cod_vacio) == 0) {
+				char *nom;
+				nom = (char*) malloc(TAMANYO * sizeof(char));
+				printf("Introduce el nombre:\n");
+				fflush(stdin);
+				scanf("%s", nom);
 
-		default:
-			printf("Esa opcion no existe.");
+				int len = strlen(nom);
+				char *nombre = (char*) malloc(len * sizeof(char));
+				strcpy(nombre, nom);
+
+				float precio;
+				printf("Introduce el precio:\n");
+				scanf("%f", &precio);
+				fflush(stdin);
+
+				int stock;
+				printf("Introduce stock\n");
+				scanf("%i", &stock);
+
+				(complementos + i)->articulo.codigo = codigo;
+				(complementos + i)->articulo.nombre = nombre;
+				(complementos + i)->articulo.precio = precio;
+				(complementos + i)->stock = stock;
+
+				escrituraComplemento(*(complementos + i));
+				free(nom);
+				break;
+			}
 		}
-	} while (opcion != 3);
 
+	} else {
+		for (int i = 0; i < tamanyo; i++) {
+			if (strcmp((complementos + i)->articulo.codigo, codigo) == 0) {
+				printf("El articulo que ha comprado es el siguiente: \n");
+				Imprimir_complemento(*(complementos + i));
+
+				printf("¿Cuantos articulos ha comprado?\n");
+				fflush(stdin);
+				int compra;
+				scanf("%i", &compra);
+				(complementos + i)->stock = ((complementos + i)->stock)+ compra;
+
+			}
+
+		}
+	}
 }
+	void anyadirTextil(Textil * textiles, int tamanyo) {
+		char codigo[10];
+		printf("Introduce el codigo:\n");
 
-void anyadirComplemento() {
-	char codigo[10];
-	printf("Introduce el codigo:\n");
+		scanf("%s", codigo);
+		fflush(stdin);
+		if (comprobar_textil(textiles, tamanyo, codigo)) {
 
-	scanf("%s", codigo);
-	fflush(stdin);
+			char cod_vacio[] = "0000000000";
 
-	char *descripcion;
-	descripcion = (char*) malloc(sizeof(char));
-	printf("Introduce la descripcion:\n");
+			for (int i = 0; i < tamanyo; i++) {
 
-	scanf("%s", descripcion);
-	fflush(stdin);
+				if (strcmp((textiles + i)->articulo.codigo, cod_vacio) == 0) {
 
-	float precio;
-	printf("Introduce el precio:\n");
+					char *nom;
+					nom = (char*) malloc(TAMANYO * sizeof(char));
+					printf("Introduce el nombre:\n");
+					fflush(stdin);
+					scanf("%s", nom);
 
-	scanf("%f", &precio);
-	fflush(stdin);
+					int len = strlen(nom);
+					char *nombre = (char*) malloc(len * sizeof(char));
+					strcpy(nombre, nom);
 
-	Articulo a;
-	a.codigo = codigo;
-	a.descripcion = descripcion;
-	a.precio = precio;
+					float precio;
+					printf("Introduce el precio:\n");
+					scanf("%f", &precio);
+					fflush(stdin);
 
-	escrituraAFic(a);
+					/*		Articulo a;
+					 a.codigo = codigo;
+					 a.nombre = nombre;
+					 a.precio = precio;
 
-	Complemento t;
-	t.articulo = a;
+					 escrituraAFic(a);
+					 */
 
-	int stock;
-	printf("Introduce stock\n");
-	scanf("%i", &stock);
+					int stockXS;
+					printf("Introduce stock de talla XS\n");
+					scanf("%i", &stockXS);
 
-	t.stock = stock;
-	escrituraComplemento(t);
-}
+					int stockS;
+					printf("Introduce stock de talla S\n");
+					scanf("%i", &stockS);
 
-void anyadirTextil() {
-	char codigo[10];
-	printf("Introduce el codigo:\n");
+					int stockM;
+					printf("Introduce stock de talla M\n");
+					scanf("%i", &stockM);
 
-	scanf("%s", codigo);
-	fflush(stdin);
+					int stockL;
+					printf("Introduce stock de talla L\n");
+					scanf("%i", &stockL);
 
-	char *descripcion;
-	descripcion = (char*) malloc(sizeof(char));
-	printf("Introduce la descripcion:\n");
+					char *col;
+					col = (char*) malloc(TAMANYO * sizeof(char));
+					printf("Introduce color del articulo\n");
+					scanf("%s", col);
 
-	scanf("%s", descripcion);
-	fflush(stdin);
+					len = strlen(col);
+					char *color = (char*) malloc(len * sizeof(char));
+					strcpy(color, col);
 
-	float precio;
-	printf("Introduce el precio:\n");
-	scanf("%f", &precio);
+					(textiles + i)->articulo.codigo = codigo;
+					(textiles + i)->articulo.nombre = nombre;
+					(textiles + i)->articulo.precio = precio;
+					(textiles + i)->stockXS = stockXS;
+					(textiles + i)->stockS = stockS;
+					(textiles + i)->stockM = stockM;
+					(textiles + i)->stockL = stockL;
+					(textiles + i)->color = color;
 
-	fflush(stdin);
+					escrituraTextil(*(textiles + i));
+					break;
+				}
+			}
 
-	Articulo a;
-	a.codigo = codigo;
-	a.descripcion = descripcion;
-	a.precio = precio;
+		}
+		else
+		{
 
-	escrituraAFic(a);
+		}
+	}
+	void escrituraAFic(Articulo a) {
 
-	Textil t;
-	t.articulo = a;
+		FILE *fp;
+		fp = fopen("Articulos.txt", "a");
 
-	int stockXS;
-	printf("Introduce stock de talla XS\n");
-	scanf("%i", &stockXS);
+		fprintf(fp, "%s ", a.codigo);
+		fprintf(fp, "%s ", a.nombre);
+		fprintf(fp, "%.2f\n", a.precio);
 
-	t.stockXS = stockXS;
+		fprintf(fp, "------------------------\n");
 
-	int stockS;
-	printf("Introduce stock de talla S\n");
-	scanf("%i", &stockS);
+		fclose(fp);
 
-	t.stockS = stockS;
+	}
 
-	int stockM;
-	printf("Introduce stock de talla M\n");
-	scanf("%i", &stockM);
+	bool comprobar_textil(Textil * textiles, int tamanyo, char * codigo) {
+		char cod_vacio[] = "0000000000";
+		bool unico = true;
+		for (int i = 0; i < tamanyo; i++) {
+			if (strcmp((textiles + i)->articulo.codigo, cod_vacio) != 0) {
+				if (strcmp((textiles + i)->articulo.codigo, codigo) == 0) {
+					unico = false;
+				}
 
-	t.stockM = stockM;
+			}
+		}
+		return unico;
+	}
 
-	int stockL;
-	printf("Introduce stock de talla L\n");
-	scanf("%i", &stockL);
+	bool comprobar_complemento(Complemento * complementos,int tamanyo, char * codigo) {
+		char cod_vacio[] = "0000000000";
+		bool unico = true;
+		for (int i = 0; i < tamanyo; i++) {
+			if (strcmp((complementos + i)->articulo.codigo, cod_vacio) != 0) {
+				if (strcmp((complementos + i)->articulo.codigo, codigo) == 0) {
+					unico = false;
+				}
 
-	t.stockL = stockL;
+			}
+		}
+		return unico;
+	}
 
-	char *color;
-	color = (char*) malloc(TAMANYO * sizeof(char));
-	printf("Introduce color del articulo\n");
-	scanf("%s", color);
+	void Imprimir_complemento(Complemento complemento) {
+		printf("Nombre: %s, Codigo: %s, Precio: %f, Stock: %i \n",
+				complemento.articulo.nombre, complemento.articulo.codigo,
+				complemento.articulo.precio, complemento.stock);
+	}
 
-	t.color = color;
+	void Imprimir_textil(Textil textil) {
+			printf("Nombre: %s, Codigo: %s, Precio: %f, Color: %s, StockXS: %i, StockS: %i, StockM: %i, StockL: %i \n",
+					textil.articulo.nombre, textil.articulo.codigo,
+					textil.articulo.precio, textil.color, textil.stockXS,textil.stockS,textil.stockM,textil.stockL);
+		}
 
-	escrituraTextil(t);
 
-}
-void escrituraAFic(Articulo a) {
+	void escrituraTextil(Textil t) {
 
-	FILE *fp;
-	fp = fopen("Articulos.txt", "a");
+		FILE *fp;
+		fp = fopen("Textil.txt", "a");
 
-	fprintf(fp, "%s ", a.codigo);
-	fprintf(fp, "%s ", a.descripcion);
-	fprintf(fp, "%.2f\n", a.precio);
+		fprintf(fp, "%s ", t.articulo.codigo);
+		fprintf(fp, "%s ", t.articulo.nombre);
+		fprintf(fp, "%.2f ", t.articulo.precio);
+		fprintf(fp, "%s ", t.color);
+		fprintf(fp, "%i unidades L ", t.stockL);
+		fprintf(fp, "%i unidades M ", t.stockM);
+		fprintf(fp, "%i unidades S ", t.stockS);
+		fprintf(fp, "%i unidades XS \n", t.stockXS);
 
-	fprintf(fp, "------------------------\n");
+		fprintf(fp, "------------------------\n");
 
-	fclose(fp);
+		fclose(fp);
 
-}
+	}
 
-void escrituraTextil(Textil t) {
+	void escrituraComplemento(Complemento c)
+	{
 
-	FILE *fp;
-	fp = fopen("Textil.txt", "a");
+		FILE *fp;
+		fp = fopen("Complementos.txt", "a");
 
-	fprintf(fp, "%s ", t.articulo.codigo);
-	fprintf(fp, "%s ", t.articulo.descripcion);
-	fprintf(fp, "%.2f ", t.articulo.precio);
-	fprintf(fp, "%s ", t.color);
-	fprintf(fp, "%i unidades L ", t.stockL);
-	fprintf(fp, "%i unidades M ", t.stockM);
-	fprintf(fp, "%i unidades S ", t.stockS);
-	fprintf(fp, "%i unidades XS \n", t.stockXS);
+		fprintf(fp, "%s ", c.articulo.codigo);
+		fprintf(fp, "%s ", c.articulo.nombre);
+		fprintf(fp, "%.2f ", c.articulo.precio);
+		fprintf(fp, "%i unidades\n", c.stock);
 
-	fprintf(fp, "------------------------\n");
+		fprintf(fp, "------------------------\n");
 
-	fclose(fp);
+		fclose(fp);
 
-}
+	}
 
-void escrituraComplemento(Complemento c) {
-
-	FILE *fp;
-	fp = fopen("Complementos.txt", "a");
-
-	fprintf(fp, "%s ", c.articulo.codigo);
-	fprintf(fp, "%s ", c.articulo.descripcion);
-	fprintf(fp, "%.2f ", c.articulo.precio);
-	fprintf(fp, "%i unidades\n", c.stock);
-
-	fprintf(fp, "------------------------\n");
-
-	fclose(fp);
-
-}

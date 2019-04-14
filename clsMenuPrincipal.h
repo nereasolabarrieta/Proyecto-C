@@ -14,5 +14,6 @@ void menuPrincipal();
 void imprimirClientes ();
 void introducirC();
 void imprimirProv ();
+void compra();
 
 #endif /* CLSMENUPRINCIPAL_H_ */

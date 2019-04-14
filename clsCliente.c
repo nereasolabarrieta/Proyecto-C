@@ -49,6 +49,7 @@ void introducirCliente(Cliente * nuevoCliente) {
 	free(nom);
 	free(ape);
 }
+
 void escribirClienteEnFic(Cliente c) {
 
 	FILE *fp;
@@ -64,6 +65,7 @@ void escribirClienteEnFic(Cliente c) {
 	fclose(fp);
 
 }
+
 void lecturaFicheroCliente() {
 	FILE *f;
 	f = fopen("Clientes.txt", "r");
@@ -77,10 +79,8 @@ void lecturaFicheroCliente() {
 	fclose(f);
 }
 
-void imprimirCliente(Cliente *cl) {
-	printf("Nombre %s %s, dni: %s, dinero: %i€\n", cl->nom, cl->ape, cl->dni,
-			cl->acumulado);
+void imprimirCliente(Cliente cl) {
+	printf("Nombre %s %s, dni: %s, dinero: %i euro\n", cl.nom, cl.ape, cl.dni,
+			cl.acumulado);
 }
-
-
 

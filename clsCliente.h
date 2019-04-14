@@ -18,7 +18,7 @@ typedef struct
 
 void introducirCliente(Cliente *);
 void escribirClienteEnFic(Cliente);
-void imprimirCliente(Cliente *);
+void imprimirCliente(Cliente );
 void lecturaFicheroCliente();
 
 #endif /* CLSCLIENTE_H_ */

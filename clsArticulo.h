@@ -11,7 +11,7 @@
 typedef struct
 {
 	char *codigo;
-	char *descripcion;
+	char *nombre;
 	float precio;
 }Articulo;
 
@@ -32,10 +32,14 @@ typedef struct
 	int stock;
 
 }Complemento;
-void anyadirArticulo();
+
 void anyadirComplemento();
 void anyadirTextil();
 void escrituraAFic(Articulo);
 void escrituraTextil(Textil);
 void escrituraComplemento(Complemento);
+bool comprobar_textil(Textil * textiles, int tamanyo, char * codigo);
+bool comprobar_complemento(Complemento * complementos,int tamanyo, char * codigo);
+void Imprimir_complemento(Complemento complemento);
+void Imprimir_textil(Textil textil);
 #endif /* CLSARTICULO_H_ */
