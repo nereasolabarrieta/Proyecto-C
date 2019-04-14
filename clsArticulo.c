@@ -243,7 +243,7 @@ void Contabilizar_Ventacomplemento(Complemento complemento, int cantidad,
 
 	float precio = complemento.articulo.precio;
 	float cuantia = cantidad * precio;
-	(balance->importeRealizable) = (balance->importePC) + cuantia;
+	(balance->importeRealizable) = (balance->importeRealizable) + cuantia;
 	(balance->importeStock) = (balance->importeStock) - cuantia;
 
 }
@@ -251,7 +251,7 @@ void Contabilizar_Ventacomplemento(Complemento complemento, int cantidad,
 void Contabilizar_Ventatextil(Textil textil, int cantidad, Balance * balance) {
 	float precio = textil.articulo.precio;
 	float cuantia = cantidad * precio;
-	(balance->importeRealizable) = (balance->importePC) + cuantia;
+	(balance->importeRealizable) = (balance->importeRealizable) + cuantia;
 	(balance->importeStock) = (balance->importeStock) - cuantia;
 
 }
@@ -347,8 +347,67 @@ void VentaComplemento(Complemento *complementos, int tamanyo, Balance *balance) 
 	} while (comprobar_complemento(complementos, tamanyo, codigo));
 
 }
-void VentaTextil(Textil *textiles, int NUM_ARTIC, Balance *balance) {
+void VentaTextil(Textil *textiles, int tamanyo, Balance *balance) {
+	char *codigo = malloc(10 * sizeof(char));
+	int cantidadXS;
+	int cantidadS;
+	int cantidadM;
+	int cantidadL;
+	int TOTAL;
+	do {
+		printf("Introduce el codigo del articulo:\n");
 
+		fflush(stdin);
+		scanf("%s", codigo);
+
+
+		if (comprobar_textil(textiles, tamanyo, codigo)) {
+
+			printf("No existe ningun complemento con ese codigo.\n");
+
+		} else {
+
+			for (int i = 0; i < tamanyo; i++) {
+
+				if (strcmp((textiles + i)->articulo.codigo, codigo) == 0)
+				{
+
+					printf("El articulo que ha vendido es el siguiente: \n");
+
+					Imprimir_textil(*(textiles + i));
+
+					printf("¿Cuantos articulos de talla XS ha vendido?\n");
+					fflush(stdin);
+					scanf("%i", &cantidadXS);
+
+					printf("¿Cuantos articulos de talla S ha vendido?\n");
+					fflush(stdin);
+					scanf("%i", &cantidadS);
+
+					printf("¿Cuantos articulos de talla M ha vendido?\n");
+					fflush(stdin);
+					scanf("%i", &cantidadM);
+
+					printf("¿Cuantos articulos de talla L ha vendido?\n");
+					fflush(stdin);
+					scanf("%i", &cantidadL);
+
+
+
+					TOTAL=cantidadXS+cantidadS+cantidadM+cantidadL;
+					(textiles + i)->stockXS = ((textiles + i)->stockXS);
+					(textiles + i)->stockS = ((textiles + i)->stockS);
+					(textiles + i)->stockM = ((textiles + i)->stockM);
+					(textiles + i)->stockL = ((textiles + i)->stockL);
+					Contabilizar_Ventatextil(*(textiles + i), TOTAL,balance);
+
+				}
+
+			}
+			printf("La venta se ha guardado correctamente\n\n\n");
+		}
+
+	} while (comprobar_textil(textiles, tamanyo, codigo));
 }
 
 
