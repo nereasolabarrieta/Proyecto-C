@@ -189,7 +189,7 @@ void imprimirBalance ()
 {
 	float totalA= nuestro_balance->importeANC+nuestro_balance->importeDisponible+nuestro_balance->importeStock+nuestro_balance->importeRealizable;
 	float totalP= nuestro_balance->importePC+nuestro_balance->importePN+nuestro_balance->importePNC;
-	printf( "TOTAL ACTIVO: %i eu\n",totalA);
+	printf( "TOTAL ACTIVO: %f eu\n",totalA);
 		printf( "Activo no corriente: %f\n",nuestro_balance->importeANC);
 		printf( "Activo corriente: %f\n",nuestro_balance->importeDisponible+nuestro_balance->importeStock+nuestro_balance->importeRealizable);
 		printf( "1. Stock: %f\n",nuestro_balance->importeStock);

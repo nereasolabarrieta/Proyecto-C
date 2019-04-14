@@ -43,5 +43,7 @@ bool comprobar_complemento(Complemento * complementos,int tamanyo, char * codigo
 void Imprimir_complemento(Complemento complemento);
 void Imprimir_textil(Textil textil);
 void VentaComplemento(Complemento *complementos,int NUM_ARTIC, Balance *balance);
+void Contabilizar_complemento(Complemento complemento, int cantidad,Balance * balance);
+void Contabilizar_textil(Textil textil, int cantidad, Balance * balance) ;
 void VentaTextil(Textil *textiles,int NUM_ARTIC, Balance *balance);
 #endif /* CLSARTICULO_H_ */

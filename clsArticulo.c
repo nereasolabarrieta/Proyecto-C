@@ -66,7 +66,7 @@ void anyadirComplemento(Complemento * complementos, int tamanyo,
 				printf("El articulo que ha comprado es el siguiente: \n");
 				Imprimir_complemento(*(complementos + i));
 
-				printf("¿Cuantos articulos ha comprado?\n");
+				printf("Cuantos articulos ha comprado?\n");
 				fflush(stdin);
 				int compra;
 				scanf("%i", &compra);
@@ -161,19 +161,19 @@ void anyadirTextil(Textil * textiles, int tamanyo, Balance * balance) {
 				int compraM;
 				int compraL;
 
-				printf("¿Cuantos articulos ha comprado de la talla XS?\n");
+				printf("Cuantos articulos ha comprado de la talla XS?\n");
 				fflush(stdin);
 				scanf("%i", &compraXS);
 
-				printf("¿Y de la talla S?\n");
+				printf("Y de la talla S?\n");
 				fflush(stdin);
 				scanf("%i", &compraS);
 
-				printf("¿Y de la talla M?\n");
+				printf("Y de la talla M?\n");
 				fflush(stdin);
 				scanf("%i", &compraM);
 
-				printf("¿Y de la talla L?\n");
+				printf("Y de la talla L?\n");
 				fflush(stdin);
 				scanf("%i", &compraL);
 
@@ -332,7 +332,7 @@ void VentaComplemento(Complemento *complementos, int tamanyo, Balance *balance) 
 
 					Imprimir_complemento(*(complementos + i));
 
-					printf("¿Cuantos articulos ha vendido?\n");
+					printf("Cuantos articulos ha vendido?\n");
 					fflush(stdin);
 					scanf("%i", &cantidad);
 
@@ -376,19 +376,19 @@ void VentaTextil(Textil *textiles, int tamanyo, Balance *balance) {
 
 					Imprimir_textil(*(textiles + i));
 
-					printf("¿Cuantos articulos de talla XS ha vendido?\n");
+					printf("Cuantos articulos de talla XS ha vendido?\n");
 					fflush(stdin);
 					scanf("%i", &cantidadXS);
 
-					printf("¿Cuantos articulos de talla S ha vendido?\n");
+					printf("Cuantos articulos de talla S ha vendido?\n");
 					fflush(stdin);
 					scanf("%i", &cantidadS);
 
-					printf("¿Cuantos articulos de talla M ha vendido?\n");
+					printf("Cuantos articulos de talla M ha vendido?\n");
 					fflush(stdin);
 					scanf("%i", &cantidadM);
 
-					printf("¿Cuantos articulos de talla L ha vendido?\n");
+					printf("Cuantos articulos de talla L ha vendido?\n");
 					fflush(stdin);
 					scanf("%i", &cantidadL);
 
