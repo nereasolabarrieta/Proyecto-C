@@ -43,6 +43,11 @@ do	{
 		printf("Introducir PATRIMONIO NETO\n");
 		scanf("%f", &importePN);
 
+		if(!cuadra(importeStock, importeRealizable,importeDisponible, importeANC, importePC, importePNC, importePN))
+		{
+			printf("El balance no cuadra. Por favor, introduce otra vez los datos:\n");
+		}
+
 	}while (!cuadra(importeStock, importeRealizable,importeDisponible, importeANC, importePC, importePNC, importePN));
 
 
@@ -57,7 +62,7 @@ do	{
 
 	escribirFichero(*(nuevoBalance));
 
-	// habria que mirar si coincide y cuadra
+
 
 }
 bool cuadra(float importeStock, float importeRealizable,float importeDisponible, float importeANC,float importePC,float importePNC,float importePN)

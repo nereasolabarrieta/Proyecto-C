@@ -215,10 +215,12 @@ void anyadirComplemento(Complemento * complementos, int tamanyo, Balance * balan
 
 	void Contabilizar_complemento(Complemento complemento,int cantidad, Balance * balance)
 	{
+
 		float precio=complemento.articulo.precio;
 		float cuantia = cantidad*precio;
-		balance->importePC= balance->importePC + cuantia;
-		balance->importeStock= balance->importeStock +cuantia;
+		(balance->importePC)= (balance->importePC) + cuantia;
+		(balance->importeStock)= (balance->importeStock) +cuantia;
+
 
 	}
 
@@ -228,6 +230,26 @@ void anyadirComplemento(Complemento * complementos, int tamanyo, Balance * balan
 		float cuantia = cantidad*precio;
 		balance->importePC= balance->importePC + cuantia;
 		balance->importeStock= balance->importeStock +cuantia;
+
+	}
+
+	void Contabilizar_Ventacomplemento(Complemento complemento,int cantidad, Balance * balance)
+	{
+
+		float precio=complemento.articulo.precio;
+		float cuantia = cantidad*precio;
+		(balance->importeRealizable)= (balance->importePC) + cuantia;
+		(balance->importeStock)= (balance->importeStock) -cuantia;
+
+
+	}
+
+	void Contabilizar_Ventatextil(Textil textil,int cantidad, Balance * balance)
+	{
+		float precio=textil.articulo.precio;
+		float cuantia = cantidad*precio;
+		(balance->importeRealizable)= (balance->importePC) + cuantia;
+		(balance->importeStock)= (balance->importeStock) -cuantia;
 
 	}
 
@@ -280,4 +302,62 @@ void anyadirComplemento(Complemento * complementos, int tamanyo, Balance * balan
 		fclose(fp);
 
 	}
+
+	void VentaComplemento(Complemento *complementos,int tamanyo, Balance *balance)
+	{
+
+		char *codigo=malloc(10*sizeof(char));
+		int cantidad;
+		do
+		{
+			printf("Introduce el codigo del complemento:\n");
+
+			fflush(stdin);
+			scanf("%s", codigo);
+
+
+									char dni_vacio[] = "0000000000";
+									for (int i = 0; i < tamanyo; i++) {
+										if (strcmp((complementos + i)->articulo.codigo, dni_vacio) != 0) {
+											Imprimir_complemento(*(complementos + i));
+										}
+									}
+			if(comprobar_complemento(complementos,tamanyo,codigo))
+			{
+
+				printf("No existe ningun complemento con ese codigo.\n");
+
+			}else
+			{
+
+				for (int i = 0; i < tamanyo; i++) {
+					printf("%s",(complementos + i)->articulo.codigo );
+					printf("%s",codigo );
+					if (strcmp((complementos + i)->articulo.codigo, codigo) == 0) {
+						printf("El articulo que ha vendido es el siguiente: \n");
+						Imprimir_complemento(*(complementos + i));
+
+						printf("¿Cuantos articulos ha vendido?\n");
+						fflush(stdin);
+
+						scanf("%i", &cantidad);
+						(complementos + i)->stock = ((complementos + i)->stock)- cantidad;
+						Contabilizar_Ventacomplemento(*(complementos + i),cantidad,balance);
+
+					}
+
+				}
+				printf("La venta se ha guardado correctamente:");
+			}
+
+
+		}while(comprobar_complemento(complementos,tamanyo,codigo));
+
+
+	}
+	void VentaTextil(Textil *textiles,int NUM_ARTIC, Balance *balance)
+	{
+
+	}
+
 

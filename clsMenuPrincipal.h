@@ -15,5 +15,5 @@ void imprimirClientes ();
 void introducirC();
 void imprimirProv ();
 void compra();
-
+void ContabilizarVenta();
 #endif /* CLSMENUPRINCIPAL_H_ */

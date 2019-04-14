@@ -88,7 +88,7 @@ void menu() {
 		case '2':
 			introducirP();
 			break;
-		case '3':
+		case '3':ContabilizarVenta();
 			break;
 		case '4': compra();
 			break;
@@ -154,10 +154,10 @@ void compra() {
 		scanf("%c", &opcion);
 		switch (opcion) {
 		case '1':
-			anyadirComplemento(complementos,NUM_ARTIC);
+			anyadirComplemento(complementos,NUM_ARTIC,nuestro_balance);
 			break;
 		case '2':
-			anyadirTextil(textiles,NUM_ARTIC);
+			anyadirTextil(textiles,NUM_ARTIC,nuestro_balance);
 			break;
 
 		default:
@@ -204,4 +204,52 @@ void imprimirBalance ()
 		printf( "PAtrimonio neto: %f\n",nuestro_balance->importePN);
 		printf("Pasivo no corriente: %f\n",nuestro_balance->importePNC);
 		printf( "Pasivo corriente: %f\n",nuestro_balance->importePC);
+}
+
+void ContabilizarVenta(){
+	bool existe=false;
+	char *dni = malloc(10 * sizeof(char));
+	do
+	{
+	printf("Introduce el DNI del cliente que ha realizado la compra:\n");
+
+	fflush(stdin);
+	scanf("%s", dni);
+
+
+	for (int i = 0; i < NUM_CLIENTES; i++) {
+		if (strcmp((clientes + i)->dni, dni) == 0) {
+			printf("El cliente correspondiente a este DNI es el siguiente: \n");
+			imprimirCliente(*(clientes + i));
+			existe=true;
+		}
+	}
+	if(existe==false)
+	{
+		printf("No existe ningun cliente con ese DNI\n");
+	}
+
+	}while(existe==false);
+
+	char opcion;
+	do {
+
+		printf("Que tipo de venta desea contabilizar?\n");
+		printf("1-Complemento\n");
+		printf("2-Textil\n");
+
+		fflush(stdin);
+		scanf("%c", &opcion);
+		switch (opcion) {
+		case '1':
+			VentaComplemento(complementos,NUM_ARTIC, nuestro_balance);
+			break;
+		case '2':
+			VentaTextil(textiles,NUM_ARTIC, nuestro_balance);
+			break;
+
+		default:
+			printf("Esa opcion no existe.");
+		}
+	} while (opcion != 1 && opcion != 2 );
 }
