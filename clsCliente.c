@@ -60,6 +60,18 @@ void escribirClienteEnFic(Cliente c) {
 
 }
 
+void escribirFic_bin(Cliente c) {
+
+	FILE *f;
+	f = fopen("Clientes.dat", "a");
+
+
+	fclose(f);
+
+}
+
+
+
 void lecturaFicheroCliente() {
 	FILE *f;
 	f = fopen("Clientes.txt", "r");

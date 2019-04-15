@@ -56,6 +56,7 @@ void menuPrincipal() {
 		menu();
 	} else {
 
+		leerFichero(nuestro_balance);
 		menu();
 	}
 

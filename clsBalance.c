@@ -60,6 +60,7 @@ void introducir(Balance * nuevoBalance) {
 	nuevoBalance->importeStock = importeStock;
 
 	escribirFichero(*(nuevoBalance));
+	escribir_ficBin(*(nuevoBalance));
 
 }
 bool cuadra(float importeStock, float importeRealizable,
@@ -108,6 +109,35 @@ void escribirFichero(Balance balance) {
 
 }
 
+void escribir_ficBin (Balance balance)
+{
+	FILE *f;
+	f = fopen ( "Balance.dat", "wb" );
+	fwrite(&(balance.importeANC),sizeof(float),1,f);
+	fwrite(&(balance.importeStock),sizeof(float),1,f);
+	fwrite(&(balance.importeRealizable),sizeof(float),1,f);
+	fwrite(&(balance.importeDisponible),sizeof(float),1,f);
+	fwrite(&(balance.importePN),sizeof(float),1,f);
+	fwrite(&(balance.importePNC),sizeof(float),1,f);
+	fwrite(&(balance.importePC),sizeof(float),1,f);
+
+	fclose(f);
+
+}
+
+void leerFichero(Balance * balance)
+{
+	FILE *f;
+	f=fopen("Balance.dat","rb");
+	fread(&(balance->importeANC), sizeof(float),1,f);
+	fread(&(balance->importeStock), sizeof(float),1,f);
+	fread(&(balance->importeRealizable), sizeof(float),1,f);
+	fread(&(balance->importeDisponible), sizeof(float),1,f);
+	fread(&(balance->importePN), sizeof(float),1,f);
+	fread(&(balance->importePNC), sizeof(float),1,f);
+	fread(&(balance->importePC), sizeof(float),1,f);
+
+}
 bool existsFile(char* filename) {
 	FILE* f = NULL;
 	f = fopen(filename, "r");
