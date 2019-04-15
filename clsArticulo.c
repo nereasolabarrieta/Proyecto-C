@@ -275,30 +275,121 @@ void escrituraTextil(Textil t) {
 	FILE *fp;
 	fp = fopen("Textil.txt", "a");
 
-	fprintf(fp, "%s ", t.articulo.codigo);
-	fprintf(fp, "%s ", t.articulo.nombre);
-	fprintf(fp, "%.2f ", t.articulo.precio);
-	fprintf(fp, "%s ", t.color);
-	fprintf(fp, "%i unidades L ", t.stockL);
-	fprintf(fp, "%i unidades M ", t.stockM);
-	fprintf(fp, "%i unidades S ", t.stockS);
-	fprintf(fp, "%i unidades XS \n", t.stockXS);
+	fprintf(fp, "%s\n", t.articulo.codigo);
+	fprintf(fp, "%s\n", t.articulo.nombre);
+	fprintf(fp, "%f\n", t.articulo.precio);
+	fprintf(fp, "%s\n", t.color);
+	fprintf(fp, "%i\n", t.stockL);
+	fprintf(fp, "%i\n", t.stockM);
+	fprintf(fp, "%i\n", t.stockS);
+	fprintf(fp, "%i\n", t.stockXS);
 
-	fprintf(fp, "------------------------\n");
 
 	fclose(fp);
 
 }
+void lecturaFicheroComp(Complemento *c) {
+	FILE* file = fopen("Complementos.txt", "r");
+	int num, stock = 0;
+	char buffer[250];
+	float p = 0;
+	int numLineas =0;
+	char caracter;
+	while((caracter= fgetc(file))!= EOF)
+	{
+		if(caracter == '\n')
+		{
+			numLineas++;
 
+		}
+	}
+	num = numLineas/4;
+	rewind(file);
+
+	for (int i=0; i<num; i++)
+	{
+		c[i].articulo.codigo = malloc (TAMANYO * sizeof(char));
+		fscanf(file, "%s", buffer);
+		strcpy(c[i].articulo.codigo, buffer);
+
+		c[i].articulo.nombre = malloc (TAMANYO* sizeof(char));
+		fscanf(file, "%s", buffer);
+		strcpy(c[i].articulo.nombre, buffer);
+
+		fscanf(file, "%f", p);
+		c[i].articulo.precio = p;
+
+
+		fscanf(file, "%i", stock);
+		c[i].stock = stock;
+
+
+		Imprimir_complemento(c[i]);
+	}
+
+
+	    fclose(file);
+}
+void lecturaFicheroTextil(Textil *t) {
+	FILE* file = fopen("Textiles.txt", "r");
+	int num, stock = 0;
+	char buffer[250];
+	float p = 0;
+	int numLineas =0;
+	char caracter;
+	while((caracter= fgetc(file))!= EOF)
+	{
+		if(caracter == '\n')
+		{
+			numLineas++;
+
+		}
+	}
+	num = numLineas/8;
+	rewind(file);
+
+	for (int i=0; i<num; i++)
+	{
+		t[i].articulo.codigo = malloc (TAMANYO * sizeof(char));
+		fscanf(file, "%s", buffer);
+		strcpy(t[i].articulo.codigo, buffer);
+
+		t[i].articulo.nombre = malloc (TAMANYO* sizeof(char));
+		fscanf(file, "%s", buffer);
+		strcpy(t[i].articulo.nombre, buffer);
+
+
+		fscanf(file, "%f", p);
+		t[i].articulo.precio = p;
+
+		t[i].color = malloc (TAMANYO* sizeof(char));
+		fscanf(file, "%s", buffer);
+		strcpy(t[i].color, buffer);
+
+		fscanf(file, "%i", stock);
+		t[i].stockL = stock;
+
+		fscanf(file, "%i", stock);
+		t[i].stockM = stock;
+		fscanf(file, "%i", stock);
+		t[i].stockS = stock;
+		fscanf(file, "%i", stock);
+		t[i].stockXS = stock;
+		Imprimir_textil(t[i]);
+	}
+
+
+	    fclose(file);
+}
 void escrituraComplemento(Complemento c) {
 
 	FILE *fp;
 	fp = fopen("Complementos.txt", "a");
 
-	fprintf(fp, "%s,", c.articulo.codigo);
-	fprintf(fp, "%s,", c.articulo.nombre);
-	fprintf(fp, "%f, ", c.articulo.precio);
-	fprintf(fp, "%i unidades\n", c.stock);
+	fprintf(fp, "%s\n", c.articulo.codigo);
+	fprintf(fp, "%s\n", c.articulo.nombre);
+	fprintf(fp, "%f\n", c.articulo.precio);
+	fprintf(fp, "%i\n", c.stock);
 
 	fprintf(fp, "------------------------\n");
 

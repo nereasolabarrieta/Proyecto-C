@@ -38,6 +38,8 @@ void anyadirTextil();
 void escrituraAFic(Articulo);
 void escrituraTextil(Textil);
 void escrituraComplemento(Complemento);
+void lecturaFicheroTextil(Textil *t);
+void lecturaFicheroComp(Complemento *c);
 bool comprobar_textil(Textil * textiles, int tamanyo, char * codigo);
 bool comprobar_complemento(Complemento * complementos,int tamanyo, char * codigo);
 void Imprimir_complemento(Complemento complemento);

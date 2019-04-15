@@ -24,6 +24,7 @@ void introducir();
 void escribirFichero(Balance);
 void modificarBalance(Balance*);
 bool existsFile(char*);
+void leerFichero(Balance*);
 void escribir_ficBin(Balance);
 bool cuadra(float importeStock, float importeRealizable,float importeDisponible, float importeANC,float importePC,float importePNC,float importePN);
 

@@ -30,29 +30,43 @@ void introducirProveedor(Proveedor *nuevoProveedor) {
 	escribirProveedorEnFic(*nuevoProveedor);
 }
 
+
 void escribirProveedorEnFic(Proveedor p) {
 
 	FILE *fp;
 	fp = fopen("Proveedores.txt", "a");
 
-	fprintf(fp, "%s ", p.nom);
-	fprintf(fp, "%s\n", p.NIF);
-
-	fprintf(fp, "------------------------\n");
+	fprintf(fp, "%s\n%s\n", p.nom, p.NIF);
 	fclose(fp);
 
 }
-void lecturaFicheroProv() {
-	FILE *f;
-	f = fopen("Proveedores.txt", "r");
-	char *c;
+void lecturaFicheroProv(Proveedor *p) {
+	FILE* file = fopen("Clientes.txt", "r");
+	int num;
+	char buffer[250];
+	int numLineas = 0;
 	char caracter;
-	c = (char*) malloc(sizeof(char));
-	while ((caracter = fgetc(f)) != EOF) {
-		fgets(c, sizeof(Proveedor), f);
-		printf("%s\n", c);
+	while ((caracter = fgetc(file)) != EOF) {
+		if (caracter == '\n') {
+			numLineas++;
+
+		}
 	}
-	fclose(f);
+	num = numLineas / 2;
+	rewind(file);
+	for (int i = 0; i < num; i++) {
+		p[i].nom = malloc(TAMANYO * sizeof(char));
+		fscanf(file, "%s", buffer);
+		strcpy(p[i].nom, buffer);
+
+		p[i].NIF = malloc(TAMANYO * sizeof(char));
+		fscanf(file, "%s", buffer);
+		strcpy(p[i].NIF, buffer);
+
+		ImprimirProv(p[i]);
+	}
+
+	fclose(file);
 }
 void ImprimirProv(Proveedor prov) {
 	printf("[Nombre: %s, NIF: %s ]\n", prov.nom, prov.NIF);
