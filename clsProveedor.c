@@ -84,7 +84,7 @@ void escribirFic_bin_proveedores(Proveedor* p,int num_proveedores) {
 		len=strlen((p+i)->NIF)+1;
 		fputc(len,f);
 		fwrite((p+i)->NIF,sizeof(char),len,f);
-		free(len);
+
 	}
 	fclose(f);
 
@@ -107,7 +107,7 @@ void LeerFic_bin_proveedores(Proveedor *p) {
 			len=fgetc(f);
 			(p+i)->NIF=malloc(len*sizeof(char));
 			fread((p+i)->NIF,sizeof(char),len,f);
-			free(len);
+
 		}
 
 	fclose(f);

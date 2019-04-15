@@ -46,7 +46,7 @@ void menuPrincipal() {
 			((complementos + i)->articulo).codigo= dni_vacio;
 		}
 
-	free(dni_vacio);
+
 
 // si existe clientes.txt meterlos en el array
 // si existe provedorees.txt meterlos en el array
@@ -101,7 +101,7 @@ void menu() {
 		printf(" \n\n Introduzca una opcion del 1-7:");
 
 		fflush(stdin);
-		scanf("%c", &opcion);
+		scanf("%s", &opcion);
 		switch (opcion) {
 		case '1':
 			introducirC();
@@ -182,9 +182,9 @@ void compra() {
 		printf("\nQue tipo de articulo desea introducir?\n");
 		printf("1-Complemento\n");
 		printf("2-Textil\n");
-
+		printf("0-Salir\n");
 		fflush(stdin);
-		scanf("%c", &opcion);
+		scanf("%s", &opcion);
 		switch (opcion) {
 		case '1':
 			anyadirComplemento(complementos,NUM_ARTIC,nuestro_balance);
@@ -192,11 +192,13 @@ void compra() {
 		case '2':
 			anyadirTextil(textiles,NUM_ARTIC,nuestro_balance);
 			break;
-
+		case '0':
+			printf("Agur");
+			break;
 		default:
 			printf("Esa opcion no existe.");
 		}
-	} while (!(opcion == '1' || opcion == '2') );
+	} while (!(opcion == '1' || opcion == '2' || opcion=='0') );
 
 }
 
@@ -228,7 +230,7 @@ void imprimirBalance ()
 		printf( "Activo no corriente: %f\n",nuestro_balance->importeANC);
 		printf( "Activo corriente: %f\n",nuestro_balance->importeDisponible+nuestro_balance->importeStock+nuestro_balance->importeRealizable);
 		printf( "1. Stock: %f\n",nuestro_balance->importeStock);
-		printf( "2. Realizable: %f\n",+nuestro_balance->importeRealizable);
+		printf( "2. Realizable: %f\n",nuestro_balance->importeRealizable);
 		printf( "3. Disponible: %f\n",nuestro_balance->importeDisponible);
 
 		printf( "--------------------------\n");
@@ -262,9 +264,9 @@ void ContabilizarVenta(){
 				printf("Que tipo de venta desea contabilizar?\n");
 				printf("1-Complemento\n");
 				printf("2-Textil\n");
-
+				printf("0-Salir\n");
 				fflush(stdin);
-				scanf("%c", &opcion);
+				scanf("%s", &opcion);
 				switch (opcion) {
 				case '1':
 					VentaComplemento(complementos,NUM_ARTIC, nuestro_balance,(clientes + i));
@@ -274,11 +276,13 @@ void ContabilizarVenta(){
 					VentaTextil(textiles,NUM_ARTIC, nuestro_balance,(clientes + i));
 					escribirFic_bin_clientes(clientes,i+1);
 					break;
-
+				case '0':
+					printf("Salir");
+					break;
 				default:
 					printf("Esa opcion no existe.");
 				}
-			} while  (!(opcion == '1' || opcion == '2') );
+			} while  (!(opcion == '1' || opcion == '2' || opcion == '0') );
 			break;
 		}
 	}

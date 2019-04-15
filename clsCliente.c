@@ -53,7 +53,7 @@ void escribirClienteEnFic(Cliente c) {
 	FILE *fp;
 	fp = fopen("Clientes.txt", "a");
 
-	fprintf(fp, "%s\n%s\n%s\n%d\n",c.nom,c.ape,c.dni,c.acumulado);
+	fprintf(fp, "%s\n%s\n%s\n%f\n",c.nom,c.ape,c.dni,c.acumulado);
 
 	fclose(fp);
 
@@ -113,7 +113,7 @@ void escribirFic_bin_clientes(Cliente* c,int num_clientes) {
 		fputc(len,f);
 		fwrite((c+i)->ape,sizeof(char),len,f);
 		fwrite((c+i)->dni,sizeof(char),11,f);
-		free(len);
+
 	}
 	fclose(f);
 
@@ -142,7 +142,7 @@ void LeerFic_bin_clientes(Cliente *c) {
 
 			(c+i)->dni=malloc(11*sizeof(char));
 			fread((c+i)->dni,sizeof(char),11,f);
-			free(len);
+
 
 	}
 

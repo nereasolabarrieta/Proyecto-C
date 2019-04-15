@@ -167,7 +167,7 @@ void modificarBalance(Balance *b) {
 			printf(" \n\n Introduzca una opcion del 1-7:");
 
 			fflush(stdin);
-			scanf("%c", &opcion);
+			scanf("%s", &opcion);
 			switch (opcion) {
 			case '1':
 				printf("Introducir cantidad\n");
@@ -204,7 +204,8 @@ void modificarBalance(Balance *b) {
 				scanf("%f", &cantidad);
 				b->importePNC = cantidad;
 				break;
-
+			case '0':
+				printf("Agur");
 			default:
 				printf("Esa opcion no esta disponible\n");
 			}
@@ -219,4 +220,5 @@ void modificarBalance(Balance *b) {
 	} while (!cuadra(b->importeStock, b->importeRealizable, b->importeDisponible,
 			b->importeANC, b->importePC, b->importePNC, b->importePN));
 	escribirFichero(*b);
+	escribir_ficBin(*b);
 }
