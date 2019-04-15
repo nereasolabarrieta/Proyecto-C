@@ -20,5 +20,6 @@ void introducirCliente(Cliente *);
 void escribirClienteEnFic(Cliente);
 void imprimirCliente(Cliente );
 void lecturaFicheroCliente();
-
+void escribirFic_bin(Cliente c);
+void leer_bin(Cliente c,int tamanyo);
 #endif /* CLSCLIENTE_H_ */

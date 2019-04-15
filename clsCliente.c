@@ -63,12 +63,68 @@ void escribirClienteEnFic(Cliente c) {
 void escribirFic_bin(Cliente c) {
 
 	FILE *f;
-	f = fopen("Clientes.dat", "a");
+	f = fopen("Clientes.dat", "ab");
 
+	fputc(c.acumulado,f);
+	int len=strlen(c.nom);
+	fputc(len,f);
+	fwrite(c.nom,sizeof(char),len,f);
+	len=strlen(c.ape);
+	fputc(len,f);
+	fwrite(c.ape,sizeof(char),len,f);
+	fputc(10,f);
+	fwrite(c.dni,sizeof(char),10,f);
 
 	fclose(f);
 
 }
+
+void leer_bin(Cliente c,int tamanyo) {
+
+	FILE *f;
+	f = fopen("Clientes.dat", "a");
+
+	fputc(c.acumulado,f);
+	int len=strlen(c.nom);
+	fputc(len,f);
+	fwrite(c.nom,sizeof(char),len,f);
+	len=strlen(c.ape);
+	fputc(len,f);
+	fwrite(c.ape,sizeof(char),len,f);
+	fputc(10,f);
+	fwrite(c.dni,sizeof(char),10,f);
+
+	fclose(f);
+
+}
+
+void LeerFic_bin(Cliente *c, int tamanyo) {
+
+	FILE *f;
+	f = fopen("Clientes.dat", "rb");
+
+	while(!feof(f))
+	{
+		int len;
+		for(int i=0;i<tamanyo;i++)
+			{
+			(c+i)->acumulado=fgetc(f);
+			len=fgetc(f);
+			fread(c->nom,sizeof(char),len,f);
+			len=fgetc(f);
+			fread(c->ape,sizeof(char),len,f);
+			len=fgetc(f);
+			fread(c->dni,sizeof(char),len,f);
+
+	}
+
+
+	}
+
+	fclose(f);
+
+}
+
 
 
 
