@@ -33,7 +33,8 @@ void menuPrincipal() {
 	char dni_vacio[] = "0000000000";
 
 	for (int i = 0; i < NUM_CLIENTES; i++) {
-		(clientes + i)->dni = dni_vacio;
+	(clientes + i)->dni = dni_vacio;
+
 	}
 
 	for (int i = 0; i < NUM_PROV; i++) {
@@ -50,13 +51,31 @@ void menuPrincipal() {
 // si existe clientes.txt meterlos en el array
 // si existe provedorees.txt meterlos en el array
 
-	if (!existsFile("Balance.txt")) {
+	if (!existsFile("Balance.dat"))
+	{
 		introducirBalance();
-
 		menu();
-	} else {
+	}
+	else
+	{
+		if (existsFile("Clientes.dat"))
+		{
+			LeerFic_bin_clientes(clientes);
+		}
+		if (existsFile("Proveedores.dat"))
+		{
+			LeerFic_bin_proveedores(proveedores);
+		}
+		if (existsFile("Complementos.dat"))
+		{
+			LeerFic_bin_complementos(complementos);
+		}
+		if (existsFile("Textil.dat"))
+		{
+			LeerFic_bin_textil(textiles);
+		}
+			leerFichero(nuestro_balance);
 
-		leerFichero(nuestro_balance);
 		menu();
 	}
 
@@ -135,6 +154,7 @@ void introducirC() {
 		if (strcmp((clientes + i)->dni, dni_vacio) == 0) {
 			printf("entra %i \n", i + 1);
 			introducirCliente(clientes + i);
+			escribirFic_bin_clientes(clientes,i+1);
 
 			break;
 		}
@@ -146,6 +166,7 @@ void introducirP() {
 	for (int i = 0; i < NUM_PROV; i++) {
 		if (strcmp((proveedores + i)->NIF, dni_vacio) == 0) {
 			introducirProveedor(proveedores + i);
+			escribirFic_bin_proveedores(proveedores,i+1);
 			break;
 		}
 	}
@@ -182,7 +203,8 @@ void compra() {
 void imprimirClientes() {
 	char dni_vacio[] = "0000000000";
 	for (int i = 0; i < NUM_CLIENTES; i++) {
-		if (strcmp((clientes + i)->dni, dni_vacio) != 0) {
+		if (strcmp((clientes + i)->dni, dni_vacio) != 0)
+		{
 			imprimirCliente(*(clientes + i));
 		}
 	}
@@ -234,6 +256,29 @@ void ContabilizarVenta(){
 			printf("El cliente correspondiente a este DNI es el siguiente: \n");
 			imprimirCliente(*(clientes + i));
 			existe=true;
+			char opcion;
+				do {
+
+				printf("Que tipo de venta desea contabilizar?\n");
+				printf("1-Complemento\n");
+				printf("2-Textil\n");
+
+				fflush(stdin);
+				scanf("%c", &opcion);
+				switch (opcion) {
+				case '1':
+					VentaComplemento(complementos,NUM_ARTIC, nuestro_balance,(clientes + i));
+					escribirFic_bin_clientes(clientes,i+1);
+					break;
+				case '2':
+					VentaTextil(textiles,NUM_ARTIC, nuestro_balance,(clientes + i));
+					escribirFic_bin_clientes(clientes,i+1);
+					break;
+
+				default:
+					printf("Esa opcion no existe.");
+				}
+			} while  (!(opcion == '1' || opcion == '2') );
 			break;
 		}
 	}
@@ -244,27 +289,7 @@ void ContabilizarVenta(){
 
 	}while(existe==false);
 
-	char opcion;
-	do {
 
-		printf("Que tipo de venta desea contabilizar?\n");
-		printf("1-Complemento\n");
-		printf("2-Textil\n");
-
-		fflush(stdin);
-		scanf("%c", &opcion);
-		switch (opcion) {
-		case '1':
-			VentaComplemento(complementos,NUM_ARTIC, nuestro_balance);
-			break;
-		case '2':
-			VentaTextil(textiles,NUM_ARTIC, nuestro_balance);
-			break;
-
-		default:
-			printf("Esa opcion no existe.");
-		}
-	} while  (!(opcion == '1' || opcion == '2') );
 }
 void imprimirCosmeticos()
 {

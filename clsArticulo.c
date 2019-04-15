@@ -11,7 +11,9 @@
 #include <stdbool.h>
 #include "clsArticulo.h"
 #include "clsBalance.h"
+#include "clsCliente.h"
 #define TAMANYO 20
+int num_complementos=0;
 
 void anyadirComplemento(Complemento * complementos, int tamanyo,
 		Balance * balance) {
@@ -52,7 +54,7 @@ void anyadirComplemento(Complemento * complementos, int tamanyo,
 				scanf("%i", &stock);
 
 				(complementos + i)->stock = stock;
-
+				escribir_fic_bin_complementos (complementos,i+1);
 				escrituraComplemento(*(complementos + i));
 				free(nom);
 				Contabilizar_complemento(*(complementos + i), stock, balance);
@@ -72,6 +74,7 @@ void anyadirComplemento(Complemento * complementos, int tamanyo,
 				scanf("%i", &compra);
 				(complementos + i)->stock = ((complementos + i)->stock)
 						+ compra;
+				escribir_fic_bin_complementos (complementos,i+1);
 				Contabilizar_complemento(*(complementos + i), compra, balance);
 
 			}
@@ -142,7 +145,7 @@ void anyadirTextil(Textil * textiles, int tamanyo, Balance * balance) {
 				(textiles + i)->stockM = stockM;
 				(textiles + i)->stockL = stockL;
 
-
+				escribir_fic_bin_textil (textiles,i+1);
 				escrituraTextil(*(textiles + i));
 				int compra = stockXS + stockS + stockM + stockL;
 				Contabilizar_textil(*(textiles + i), compra, balance);
@@ -181,6 +184,7 @@ void anyadirTextil(Textil * textiles, int tamanyo, Balance * balance) {
 				(textiles + i)->stockS = ((textiles + i)->stockS) + compraS;
 				(textiles + i)->stockM = ((textiles + i)->stockM) + compraM;
 				(textiles + i)->stockL = ((textiles + i)->stockL) + compraL;
+				escribir_fic_bin_textil (textiles,i+1);
 
 				int compra = compraXS + compraS + compraM + compraL;
 				Contabilizar_textil(*(textiles + i), compra, balance);
@@ -227,7 +231,7 @@ void Contabilizar_complemento(Complemento complemento, int cantidad,
 	float cuantia = cantidad * precio;
 	(balance->importePC) = (balance->importePC) + cuantia;
 	(balance->importeStock) = (balance->importeStock) + cuantia;
-
+	escribir_ficBin(*(balance));
 }
 
 void Contabilizar_textil(Textil textil, int cantidad, Balance * balance) {
@@ -235,6 +239,7 @@ void Contabilizar_textil(Textil textil, int cantidad, Balance * balance) {
 	float cuantia = cantidad * precio;
 	balance->importePC = balance->importePC + cuantia;
 	balance->importeStock = balance->importeStock + cuantia;
+	escribir_ficBin(*(balance));
 
 }
 
@@ -243,16 +248,18 @@ void Contabilizar_Ventacomplemento(Complemento complemento, int cantidad,
 
 	float precio = complemento.articulo.precio;
 	float cuantia = cantidad * precio;
-	(balance->importeRealizable) = (balance->importeRealizable) + cuantia;
+	(balance->importeDisponible) = (balance->importeDisponible) + cuantia;
 	(balance->importeStock) = (balance->importeStock) - cuantia;
+	escribir_ficBin(*(balance));
 
 }
 
 void Contabilizar_Ventatextil(Textil textil, int cantidad, Balance * balance) {
 	float precio = textil.articulo.precio;
 	float cuantia = cantidad * precio;
-	(balance->importeRealizable) = (balance->importeRealizable) + cuantia;
+	(balance->importeDisponible) = (balance->importeDisponible) + cuantia;
 	(balance->importeStock) = (balance->importeStock) - cuantia;
+	escribir_ficBin(*(balance));
 
 }
 
@@ -397,7 +404,7 @@ void escrituraComplemento(Complemento c) {
 
 }
 
-void VentaComplemento(Complemento *complementos, int tamanyo, Balance *balance) {
+void VentaComplemento(Complemento *complementos, int tamanyo, Balance *balance, Cliente * cliente) {
 
 	char *codigo = malloc(10 * sizeof(char));
 	int cantidad;
@@ -439,9 +446,11 @@ void VentaComplemento(Complemento *complementos, int tamanyo, Balance *balance) 
 					else
 					{
 						(complementos + i)->stock = ((complementos + i)->stock)-cantidad;
+						escribir_fic_bin_complementos(complementos,i+1);
 						Contabilizar_Ventacomplemento(*(complementos + i), cantidad,balance);
 						disponible=true;
 					}
+					enviarImporte((complementos + i)->articulo.precio, cantidad,cliente);
 					}while(disponible==false);
 
 				}
@@ -453,7 +462,13 @@ void VentaComplemento(Complemento *complementos, int tamanyo, Balance *balance) 
 	} while (comprobar_complemento(complementos, tamanyo, codigo));
 
 }
-void VentaTextil(Textil *textiles, int tamanyo, Balance *balance) {
+void enviarImporte(float precio, int cantidad, Cliente * cliente)
+{
+	float acumulado;
+	acumulado=precio*cantidad;
+	cliente->acumulado=acumulado;
+}
+void VentaTextil(Textil *textiles, int tamanyo, Balance *balance, Cliente * cliente) {
 	char *codigo = malloc(10 * sizeof(char));
 	int cantidadXS;
 	int cantidadS;
@@ -549,10 +564,11 @@ void VentaTextil(Textil *textiles, int tamanyo, Balance *balance) {
 						}}while(disponible==false);
 
 					TOTAL=cantidadXS+cantidadS+cantidadM+cantidadL;
+					escribir_fic_bin_textil(textiles,i+1);
 
 
 
-
+					enviarImporte((textiles + i)->articulo.precio, TOTAL,cliente);
 					Contabilizar_Ventatextil(*(textiles + i), TOTAL,balance);
 
 				}
@@ -564,3 +580,113 @@ void VentaTextil(Textil *textiles, int tamanyo, Balance *balance) {
 	} while (comprobar_textil(textiles, tamanyo, codigo));
 }
 
+void escribir_fic_bin_complementos (Complemento* c,int num_complementos)
+{
+	FILE *f;
+	f = fopen("Complementos.dat", "wb");
+	fputc(num_complementos,f);
+	int len=0;
+	for(int i=0; i<num_complementos; i++)
+	{
+		fputc((c+i)->stock,f);
+		len=strlen((c+i)->articulo.codigo)+1;
+		fputc(len,f);
+		fwrite((c+i)->articulo.codigo,sizeof(char),len,f);
+		len=strlen((c+i)->articulo.nombre)+1;
+		fputc(len,f);
+		fwrite((c+i)->articulo.nombre,sizeof(char),len,f);
+		fwrite(&((c+i)->articulo.precio),sizeof(float),1,f);
+	}
+	fclose(f);
+
+}
+
+void LeerFic_bin_complementos(Complemento* c) {
+
+	FILE *f;
+	f = fopen("Complementos.dat", "rb");
+
+	num_complementos=fgetc(f);
+		int len=0;
+		for(int i=0;i<num_complementos;i++)
+			{
+
+			(c+i)->stock=fgetc(f);
+
+			len=fgetc(f);
+			(c+i)->articulo.codigo=malloc(len*sizeof(char));
+			fread((c+i)->articulo.codigo,sizeof(char),len,f);
+
+			len=fgetc(f);
+			(c+i)->articulo.nombre=malloc(len*sizeof(char));
+			fread((c+i)->articulo.nombre,sizeof(char),len,f);
+
+			fread(&((c+i)->articulo.precio),sizeof(float),1,f);
+
+	}
+
+	fclose(f);
+
+}
+
+void escribir_fic_bin_textil (Textil* t,int num_complementos)
+{
+	FILE *f;
+	f = fopen("Textil.dat", "wb");
+	fputc(num_complementos,f);
+	int len=0;
+	for(int i=0; i<num_complementos; i++)
+	{
+		fputc((t+i)->stockXS,f);
+		fputc((t+i)->stockS,f);
+		fputc((t+i)->stockM,f);
+		fputc((t+i)->stockL,f);
+		len=strlen((t+i)->articulo.codigo)+1;
+		fputc(len,f);
+		fwrite((t+i)->articulo.codigo,sizeof(char),len,f);
+		len=strlen((t+i)->color)+1;
+		fputc(len,f);
+		fwrite((t+i)->color,sizeof(char),len,f);
+		len=strlen((t+i)->articulo.nombre)+1;
+		fputc(len,f);
+		fwrite((t+i)->articulo.nombre,sizeof(char),len,f);
+		fwrite(&((t+i)->articulo.precio),sizeof(float),1,f);
+
+	}
+	fclose(f);
+
+}
+
+void LeerFic_bin_textil(Textil* t) {
+
+	FILE *f;
+	f = fopen("Textil.dat", "rb");
+
+	num_complementos=fgetc(f);
+		int len=0;
+		for(int i=0;i<num_complementos;i++)
+			{
+
+			(t+i)->stockXS=fgetc(f);
+			(t+i)->stockS=fgetc(f);
+			(t+i)->stockM=fgetc(f);
+			(t+i)->stockL=fgetc(f);
+
+			len=fgetc(f);
+			(t+i)->articulo.codigo=malloc(len*sizeof(char));
+			fread((t+i)->articulo.codigo,sizeof(char),len,f);
+
+			len=fgetc(f);
+			(t+i)->color=malloc(len*sizeof(char));
+			fread((t+i)->color,sizeof(char),len,f);
+
+			len=fgetc(f);
+			(t+i)->articulo.nombre=malloc(len*sizeof(char));
+			fread((t+i)->articulo.nombre,sizeof(char),len,f);
+
+			fread(&((t+i)->articulo.precio),sizeof(float),1,f);
+	}
+
+	fclose(f);
+
+}

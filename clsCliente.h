@@ -13,13 +13,14 @@ typedef struct
 	char* dni;
 	char *nom;
 	char *ape;
-	int acumulado;
+	float acumulado;
 }Cliente;
 
 void introducirCliente(Cliente *);
 void escribirClienteEnFic(Cliente);
 void imprimirCliente(Cliente );
 void lecturaFicheroCliente();
-void escribirFic_bin(Cliente c);
-void leer_bin(Cliente c,int tamanyo);
+void escribirFic_bin_clientes(Cliente* c,int num_clientes);
+void LeerFic_bin_clientes(Cliente *c);
+
 #endif /* CLSCLIENTE_H_ */

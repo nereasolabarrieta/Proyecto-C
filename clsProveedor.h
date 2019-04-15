@@ -18,5 +18,7 @@ void introducirProveedor(Proveedor *nuevoProveedor);
 void escribirProveedorEnFic(Proveedor);
 void ImprimirProv(Proveedor prov);
 void lecturaFicheroProv();
+void LeerFic_bin_proveedores(Proveedor *p);
+void escribirFic_bin_proveedores(Proveedor* p,int num_proveedores);
 
 #endif /* CLSPROVEEDOR_H_ */

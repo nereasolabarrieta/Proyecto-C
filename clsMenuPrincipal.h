@@ -16,7 +16,7 @@ void introducirC();
 void imprimirProv ();
 void compra();
 void ContabilizarVenta();
-void imprimirCosmeticos();
+void imprimirComplementos();
 void imprimirBalance ();
 void imprimirTextil();
 #endif /* CLSMENUPRINCIPAL_H_ */

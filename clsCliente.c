@@ -7,11 +7,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "clsCliente.h"
 
 #define TAMANYO 30
+int num_clientes=0;
 
 void introducirCliente(Cliente * nuevoCliente) {
+
 	nuevoCliente->dni = malloc(10 * sizeof(char));
 	printf("Introduce DNI:\n");
 	fflush(stdin);
@@ -37,10 +40,12 @@ void introducirCliente(Cliente * nuevoCliente) {
 	nuevoCliente->ape = (char*) malloc(len * sizeof(char));
 	strcpy(nuevoCliente->ape, ape);
 
-	nuevoCliente->acumulado = 0;
+	nuevoCliente->acumulado = 0.0;
 
 	fflush(stdin);
 	escribirClienteEnFic(*nuevoCliente);
+
+
 
 }
 void escribirClienteEnFic(Cliente c) {
@@ -91,74 +96,63 @@ void lecturaFicheroCliente(Cliente *c) {
 
 	    fclose(file);
 }
-//void escribirFic_bin(Cliente c) {
-//
-//	FILE *f;
-//	f = fopen("Clientes.dat", "ab");
-//
-//	fputc(c.acumulado,f);
-//	int len=strlen(c.nom);
-//	fputc(len,f);
-//	fwrite(c.nom,sizeof(char),len,f);
-//	len=strlen(c.ape);
-//	fputc(len,f);
-//	fwrite(c.ape,sizeof(char),len,f);
-//	fputc(10,f);
-//	fwrite(c.dni,sizeof(char),10,f);
-//
-//	fclose(f);
-//
-//}
-//
-//void leer_bin(Cliente c,int tamanyo) {
-//
-//	FILE *f;
-//	f = fopen("Clientes.dat", "a");
-//
-//	fputc(c.acumulado,f);
-//	int len=strlen(c.nom);
-//	fputc(len,f);
-//	fwrite(c.nom,sizeof(char),len,f);
-//	len=strlen(c.ape);
-//	fputc(len,f);
-//	fwrite(c.ape,sizeof(char),len,f);
-//	fputc(10,f);
-//	fwrite(c.dni,sizeof(char),10,f);
-//
-//	fclose(f);
-//
-//}
-//
-//void LeerFic_bin(Cliente *c, int tamanyo) {
-//
-//	FILE *f;
-//	f = fopen("Clientes.dat", "rb");
-//
-//	while(!feof(f))
-//	{
-//		int len;
-//		for(int i=0;i<tamanyo;i++)
-//			{
-//			(c+i)->acumulado=fgetc(f);
-//			len=fgetc(f);
-//			fread(c->nom,sizeof(char),len,f);
-//			len=fgetc(f);
-//			fread(c->ape,sizeof(char),len,f);
-//			len=fgetc(f);
-//			fread(c->dni,sizeof(char),len,f);
-//
-//	}
-//
-//
-//	}
-//
-//	fclose(f);
-//
-//}
+void escribirFic_bin_clientes(Cliente* c,int num_clientes) {
+
+	FILE *f;
+	f = fopen("Clientes.dat", "wb");
+	fputc(num_clientes,f);
+	int len=0;
+	for(int i=0; i<num_clientes; i++)
+	{
+
+		fwrite(&((c+i)->acumulado),sizeof(float),1,f);
+		len=strlen((c+i)->nom)+1;
+		fputc(len,f);
+		fwrite((c+i)->nom,sizeof(char),len,f);
+		len=strlen((c+i)->ape)+1;
+		fputc(len,f);
+		fwrite((c+i)->ape,sizeof(char),len,f);
+		fwrite((c+i)->dni,sizeof(char),11,f);
+		free(len);
+	}
+	fclose(f);
+
+}
+
+void LeerFic_bin_clientes(Cliente *c) {
+
+	FILE *f;
+	f = fopen("Clientes.dat", "rb");
+
+		num_clientes=fgetc(f);
+		int len=0;
+		for(int i=0;i<num_clientes;i++)
+			{
+
+			fread(&((c+i)->acumulado),sizeof(float),1,f);
+
+			len=fgetc(f);
+			(c+i)->nom=malloc(len*sizeof(char));
+			fread((c+i)->nom,sizeof(char),len,f);
+
+			len=fgetc(f);
+			(c+i)->ape=malloc(len*sizeof(char));
+			fread((c+i)->ape,sizeof(char),len,f);
+
+
+			(c+i)->dni=malloc(11*sizeof(char));
+			fread((c+i)->dni,sizeof(char),11,f);
+			free(len);
+
+	}
+
+	fclose(f);
+
+}
 
 
 void imprimirCliente(Cliente cl) {
-	printf("Nombre %s %s, dni: %s, dinero: %i euro\n", cl.nom, cl.ape, cl.dni,
+	printf("Nombre %s %s, dni: %s, dinero: %f euro\n", cl.nom, cl.ape, cl.dni,
 			cl.acumulado);
 }
 
