@@ -93,7 +93,7 @@ void menu() {
 		printf("\n 5. Visualizar estado contable"); //imprimier balance
 		printf("\n 6. Visualizar todos los clientes");
 		printf("\n 7. Visualizar todos los proveedores");
-		printf("\n 8. Visualizar todos los cosmeticos");
+		printf("\n 8. Visualizar todos los complementos");
 		printf("\n 9. Visualizar todos los textiles");
 		printf("\n *. Editar balance");
 		printf("\n 0. Salir");
@@ -119,7 +119,7 @@ void menu() {
 			break;
 		case '7': imprimirProv();
 			break;
-		case '8': imprimirCosmeticos();
+		case '8': imprimirComplementos();
 			break;
 		case '9': imprimirTextil();
 			break;
@@ -291,14 +291,14 @@ void ContabilizarVenta(){
 
 
 }
-void imprimirCosmeticos()
+void imprimirComplementos()
 {
 	char dni_vacio[] = "0000000000";
 			for (int i = 0; i < NUM_ARTIC; i++) {
 
 				if (strcmp((complementos + i)->articulo.codigo, dni_vacio) != 0) {
 
-					printf("imprimiendo....");Imprimir_complemento(*(complementos + i));
+					Imprimir_complemento(*(complementos + i));
 				}
 			}
 }
@@ -308,7 +308,7 @@ void imprimirTextil()
 				for (int i = 0; i < NUM_ARTIC; i++) {
 					;
 					if (strcmp((textiles + i)->articulo.codigo, dni_vacio) != 0) {
-						printf("imprimiendo....");Imprimir_textil(*(textiles + i));
+						Imprimir_textil(*(textiles + i));
 					}
 				}
 }
