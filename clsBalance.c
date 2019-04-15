@@ -118,7 +118,7 @@ bool existsFile(char* filename) {
 		return true;
 	}
 }
-void modificarBalance(Balance b) {
+void modificarBalance(Balance *b) {
 
 	char opcion;
 	float cantidad;
@@ -142,37 +142,37 @@ void modificarBalance(Balance b) {
 			case '1':
 				printf("Introducir cantidad\n");
 				scanf("%f", &cantidad);
-				b.importeANC = cantidad;
+				b->importeANC = cantidad;
 				break;
 			case '2':
 				printf("Introducir cantidad\n");
 				scanf("%f", &cantidad);
-				b.importeStock = cantidad;
+				b->importeStock = cantidad;
 				break;
 			case '3':
 				printf("Introducir cantidad\n");
 				scanf("%f", &cantidad);
-				b.importeDisponible = cantidad;
+				b->importeDisponible = cantidad;
 				break;
 			case '4':
 				printf("Introducir cantidad\n");
 				scanf("%f", &cantidad);
-				b.importeRealizable = cantidad;
+				b->importeRealizable = cantidad;
 				break;
 			case '5':
 				printf("Introducir cantidad\n");
 				scanf("%f", &cantidad);
-				b.importePN = cantidad;
+				b->importePN = cantidad;
 				break;
 			case '6':
 				printf("Introducir cantidad\n");
 				scanf("%f", &cantidad);
-				b.importePC = cantidad;
+				b->importePC = cantidad;
 				break;
 			case '7':
 				printf("Introducir cantidad\n");
 				scanf("%f", &cantidad);
-				b.importePNC = cantidad;
+				b->importePNC = cantidad;
 				break;
 
 			default:
@@ -180,13 +180,13 @@ void modificarBalance(Balance b) {
 			}
 		} while (opcion != '7');
 
-		if (!cuadra(b.importeStock, b.importeRealizable, b.importeDisponible,
-				b.importeANC, b.importePC, b.importePNC, b.importePN)) {
+		if (!cuadra(b->importeStock, b->importeRealizable, b->importeDisponible,
+				b->importeANC, b->importePC, b->importePNC, b->importePN)) {
 			printf(
 					"El balance no cuadra. Por favor, introduce otra vez los datos:\n");
 		}
 
-	} while (!cuadra(b.importeStock, b.importeRealizable, b.importeDisponible,
-			b.importeANC, b.importePC, b.importePNC, b.importePN));
-	escribirFichero(b);
+	} while (!cuadra(b->importeStock, b->importeRealizable, b->importeDisponible,
+			b->importeANC, b->importePC, b->importePNC, b->importePN));
+	escribirFichero(*b);
 }

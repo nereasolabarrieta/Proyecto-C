@@ -103,7 +103,19 @@ void menu() {
 			break;
 		case '9': imprimirTextil();
 			break;
+		case '*': modificarBalance(nuestro_balance);
+					break;
 		case '0':
+			free(clientes);
+			clientes = NULL;
+			free(nuestro_balance);
+			nuestro_balance =NULL;
+			free(textiles);
+			textiles =NULL;
+			free(complementos);
+			complementos =NULL;
+			free(proveedores);
+			proveedores =NULL;
 			printf("Agur");
 			break;
 		default:
