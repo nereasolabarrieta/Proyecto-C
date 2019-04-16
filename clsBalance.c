@@ -163,6 +163,8 @@ void modificarBalance(Balance *b) {
 			printf("\n 5. Patrimonio neto");
 			printf("\n 6. Pasivo corriente");
 			printf("\n 7. Pasivo no corriente");
+			printf("\n 0. SALIR");
+
 
 			printf(" \n\n Introduzca una opcion del 1-7:");
 
@@ -206,10 +208,12 @@ void modificarBalance(Balance *b) {
 				break;
 			case '0':
 				printf("Agur");
+				break;
 			default:
 				printf("Esa opcion no esta disponible\n");
+				break;
 			}
-		} while (opcion != '7');
+		} while (opcion != '0');
 
 		if (!cuadra(b->importeStock, b->importeRealizable, b->importeDisponible,
 				b->importeANC, b->importePC, b->importePNC, b->importePN)) {
